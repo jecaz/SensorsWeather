@@ -1,0 +1,74 @@
+{
+  "sensors": [
+    {
+      "id": 0,
+      "name": "Temperature",
+      "image": "images/ico_temperature.svg",
+      "path": "DemoDevice/Temperature",
+      "unitSymbol": "℃",
+      "value": "31.8",
+      "lastUpdate": 1530045809121,
+      "type": "FEED"
+    },
+    {
+      "id": 1,
+      "name": "Humidity",
+      "image": "images/ico_humidity.svg",
+      "path": "DemoDevice/Humidity",
+      "unitSymbol": "%",
+      "value": "43.23",
+      "lastUpdate": 1507211004000,
+      "type": "FEED"
+    },
+    {
+      "id": 2,
+      "name": "Pressure",
+      "image": "images/ico_pressure.svg",
+      "path": "DemoDevice/Pressure",
+      "unitSymbol": "mb",
+      "value": "1003.4",
+      "lastUpdate": 1507211004000,
+      "type": "FEED"
+    },
+    {
+      "id": 4,
+      "name": "Light",
+      "image": "images/ico_switcher.svg",
+      "path": "DemoDevice/Light",
+      "unitSymbol": null,
+      "value": false,
+      "lastUpdate": 1505819296000,
+      "type": "ACTUATOR"
+    },
+    {
+      "id": 5,
+      "name": "Count",
+      "image": "images/ico_slider.svg",
+      "path": "DemoDevice/Count",
+      "unitSymbol": "count",
+      "value": "+76",
+      "lastUpdate": 1505819296000,
+      "type": "ACTUATOR"
+    },
+    {
+      "id": 6,
+      "name": "Highway board",
+      "image": "images/ico_string.svg",
+      "path": "DemoDevice/Light",
+      "unitSymbol": null,
+      "value": "Drive carefully someone loves you",
+      "lastUpdate": 1505819296000,
+      "type": "ACTUATOR"
+    },
+    {
+      "id": 7,
+      "name": "High Humidity",
+      "image": "images/ico_alarm.svg",
+      "path": "DemoDevice/High Humidity",
+      "unitSymbol": null,
+      "value": true,
+      "lastUpdate": 1507211004000,
+      "type": "ALARM"
+    }
+  ]
+}
