@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+import { HttpClientModule } from '@angular/common/http';
+import {AppLayoutRoutingModule} from './routes';
+import {AppLayoutModule} from './components/app-layout/app-layout.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { MatSliderModule } from '@angular/material/slider';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatSliderModule
+    HttpClientModule,
+    AppLayoutRoutingModule,
+    AppLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
