@@ -12,7 +12,7 @@ export class Sensor {
   constructor(obj?: any) {
     this.id = obj && obj.id;
     this.name = obj && obj.name;
-    this.image = obj && obj.image && './../../../assets/' + obj.image;
+    this.image = obj && obj.image;
     this.path = obj && obj.path;
     this.unitSymbol = obj && obj.unitSymbol;
     this.value = obj && obj.value;

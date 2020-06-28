@@ -1,7 +1,20 @@
 <div class="sensors">
-  <mat-toolbar class="sensors-toolbar" color="primary">
-    <mat-toolbar-row>
-      <span>Sensors</span>
+  <mat-toolbar class="sensors-toolbar"  color="primary">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <a mat-button routerLink="/sensors">Sensors</a>
+      <div fxShow="true" fxHide.lt-md="true">
+        <a mat-button routerLink="/sensor">
+          <mat-icon>add</mat-icon>
+          Create
+        </a>
+        <a mat-button>
+          <mat-icon>delete</mat-icon>
+          Delete
+        </a>
+      </div>
+      <a mat-button fxShow="true" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+      </a>
     </mat-toolbar-row>
   </mat-toolbar>
   <main class="sensors-container">

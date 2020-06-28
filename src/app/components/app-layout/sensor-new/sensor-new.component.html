@@ -1,0 +1,68 @@
+<div fxLayout="row wrap" fxLayoutAlign="center stretch">
+  <mat-card fxFlex="40%"
+            fxFlex.xs="100%"
+            fxFlex.sm="80%"
+            fxFlex.md="60%"
+            fxFlex.lt="50">
+    <form class="sensor-form"
+          [formGroup]="form"
+          (submit)="save()">
+      <mat-form-field class="sensor-form--input-field">
+        <mat-label>Type</mat-label>
+        <mat-select class="select-option" formControlName="type">
+          <input class="filter--search"
+                 matInput
+                 type="text"
+                 placeholder="Type">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let type of typeDropdown" [value]="type"><span>{{type}}</span></mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls['type'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="sensor-form--input-field">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput />
+        <!--*ngIf="form.controls['name'].hasError('isRequired') && (form.controls['name'].dirty || form.controls['name'].touched)"-->
+        <mat-error *ngIf="form.controls['name'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="sensor-form--input-field">
+        <mat-label>Image</mat-label>
+        <mat-select formControlName="image">
+          <input class="filter--search"
+                 matInput
+                 type="text"
+                 placeholder="Image">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let image of imagesDropdown" [value]="image.value"><span>{{image.label}}</span></mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls['image'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="sensor-form--input-field">
+        <mat-label>Unit symbol</mat-label>
+        <input matInput formControlName="unitSymbol" />
+        <mat-error *ngIf="form.controls['unitSymbol'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;">
+        <mat-label>Path</mat-label>
+        <input matInput formControlName="path" />
+        <mat-error *ngIf="form.controls['path'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="sensor-form--input-field">
+        <mat-label>Value</mat-label>
+        <input matInput formControlName="value" />
+        <mat-error *ngIf="form.controls['value'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field style="width: 50%">
+        <mat-label>Last update</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="lastUpdate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.controls['lastUpdate'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button mat-raised-button color="primary" type="submit"><mat-icon style="zoom: .8">add</mat-icon>Save</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+

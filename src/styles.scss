@@ -1,7 +1,5 @@
-@mixin font-style($size, $family) {
-  font-family: $family, "Helvetica Neue";
-  font-size: $size;
-}
+@import "styles/variables";
+@import "styles/common";
 
 html {
   @include font-style(62.5%, 'Roboto');

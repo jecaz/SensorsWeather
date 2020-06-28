@@ -53,5 +53,4 @@ export class SensorsComponent implements OnInit, OnDestroy {
     }
     this.searchByType = event.value;
   }
-
 }

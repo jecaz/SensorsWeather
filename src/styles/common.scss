@@ -1,0 +1,90 @@
+@import "variables";
+
+@mixin font-style($size, $family) {
+  font-family: $family, "Helvetica Neue";
+  font-size: $size;
+}
+
+@mixin message-state($color, $bgCol, $borderCol) {
+  color: $color !important;
+  background-color: $bgCol !important;
+  border-color: $borderCol !important;
+}
+
+@mixin message-display($padding, $color, $bgCol, $borderCol, $width) {
+  @include message-state($color, $bgCol, $borderCol);
+  padding: $padding !important;
+  border-radius: 4px !important;
+  width:  $width !important;
+}
+
+.mat-form-field.ng-dirty.ng-invalid .mat-form-field-underline {
+  background-color: rgb(118, 118, 118) !important;
+}
+
+.mat-form-field.ng-dirty.ng-invalid .mat-form-field-label {
+  color: rgb(118, 118, 118) !important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-input-element {
+  color: rgb(118, 118, 118) !important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: rgb(118, 118, 118)!important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
+  color: rgb(118, 118, 118) !important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+  background-color: rgb(118, 118, 118) !important;
+}
+
+.mat-form-field.mat-form-field-valid .mat-form-field-ripple {
+  background-color: rgb(118, 118, 118) !important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-input-placeholder {
+  color: rgb(118, 118, 118)!important;
+}
+
+.mat-form-field.ng-dirty.ng-invalid .mat-form-field-underline {
+  background-color: #464646 !important;
+}
+
+.mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+  color: rgb(118, 118, 118)!important;
+}
+
+.mat-form-field.mat-form-field-invalid:focus {
+  color: rgb(118, 118, 118)
+}
+
+.sensor-form {
+  .mat-focused .mat-form-field-ripple {
+    background-color: #3f51b5 !important;
+  }
+  .mat-focused .mat-form-field-label {
+    color: #3f51b5 !important;
+  }
+}
+
+.mat-select-panel {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  max-height: 300px !important;
+}
+
+.error {
+  @include message-display(10px, $error-message-col, $error-message-bgCol, $error-message-borderCol, 400px);
+}
+
+.success {
+  @include message-display(10px, $success-col, $success-bgCol, $success-borderCol, 200px);
+}
+
+.filter--search {
+  padding: 1.6rem !important;
+}

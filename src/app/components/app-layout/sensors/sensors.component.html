@@ -42,7 +42,7 @@
       </mat-card-header>
       <mat-card-content class="sensors-card-content">
         <div class="sensors-card-content-main" fxLayout="row" fxLayoutAlign="space-between center">
-          <img class="sensors-card-content-main--icon" src={{sensor.image}} alt="Sensor icon">
+          <img class="sensors-card-content-main--icon" [src]="'./../../../assets/' + sensor.image" alt="Sensor icon">
           <span class="sensors-card-content-main--value" matTooltip="{{sensor.value.length >= 20 ? sensor.value : ''}}">
             {{sensor.value | shorten: 20}}
           </span>
