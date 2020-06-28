@@ -1,0 +1,31 @@
+@import "../../../../styles/variables";
+
+.sensors-card {
+  &-subtitle--main {
+    display: block;
+  }
+
+  &-content {
+    margin-top: 5rem;
+    color: $primaryCol;
+
+    &-main {
+      height: 3.5rem;
+
+      &--icon {
+        width: 5rem;
+        height: 4rem;
+        filter: $filterCol;
+      }
+
+      &--value {
+        font-size: 3rem;
+      }
+    }
+
+    &--symbol {
+      height: 1.7rem;
+      text-align: right;
+    }
+  }
+}

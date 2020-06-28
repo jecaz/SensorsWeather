@@ -1,10 +1,13 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Sensors</span>
-  </mat-toolbar-row>
-</mat-toolbar>
-<main>
-  <section>
-    Hello sensors!
-  </section>
-</main>
+<div class="sensors">
+  <mat-toolbar class="sensors-toolbar" color="primary">
+    <mat-toolbar-row>
+      <span>Sensors</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <main class="sensors-container">
+    <section class="sensors-container-content">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
+

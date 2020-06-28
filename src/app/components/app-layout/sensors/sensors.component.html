@@ -1,0 +1,22 @@
+<div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="center stretch">
+  <div fxFlex="40rem" fxFlex.xs="35rem" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.lt-md="0 1 calc(50% - 32px)" *ngFor="let sensor of sensors">
+    <mat-card class="mat-elevation-z4 sensors-card">
+      <mat-card-header>
+        <mat-card-title>{{sensor.name}}</mat-card-title>
+        <mat-card-subtitle>
+          <span class="sensors-card-subtitle--main">{{sensor.path}}</span>
+          <span>@{{sensor.lastUpdate | date: 'hh:mm'}}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="sensors-card-content">
+        <div class="sensors-card-content-main" fxLayout="row" fxLayoutAlign="space-between center">
+          <img class="sensors-card-content-main--icon" src={{sensor.image}} alt="Sensor icon">
+          <span class="sensors-card-content-main--value">{{sensor.value}}</span>
+        </div>
+        <div class="sensors-card-content--symbol">{{sensor.unitSymbol}}</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+

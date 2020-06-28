@@ -1,0 +1,17 @@
+.sensors {
+  &-toolbar {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+  }
+
+  &-container {
+    margin-top: 6.4rem;
+    position: relative;
+    z-index: 1;
+
+    &-content {
+      padding: 2rem;
+    }
+  }
+}
