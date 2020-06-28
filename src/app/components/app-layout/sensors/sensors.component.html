@@ -1,5 +1,5 @@
-<div fxLayout="row wrap" fxLayoutAlign="space-around stretch">
-  <mat-form-field class="filter">
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign.sm="center stretch" fxLayoutAlign="space-around stretch">
+  <mat-form-field class="filter" fxFlex="30%" fxFlex.sm="100%">
     <mat-label>Filter by name, path, value or type</mat-label>
     <input type="text"
            matInput
@@ -8,7 +8,7 @@
     <mat-icon *ngIf="searchValue" class="filter--icon filter--close-icon" (click)="searchValue = ''">close</mat-icon>
     <mat-icon *ngIf="!searchValue" class="filter--icon">search</mat-icon>
   </mat-form-field>
-  <mat-form-field class="filter">
+  <mat-form-field class="filter" fxFlex="30%" fxFlex.sm="100%">
     <mat-label>Filter by type</mat-label>
     <mat-select [(ngModel)]="searchByType"
                 (selectionChange)="onSelectItem($event)"
