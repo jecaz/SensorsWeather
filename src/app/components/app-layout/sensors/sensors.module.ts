@@ -2,9 +2,10 @@ import {NgModule} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {SensorsComponent} from './sensors.component';
 import {CommonModule} from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {PipesModule} from '../../../pipes/pipe.module';
-import {MatTooltipModule} from '@angular/material';
+import {MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatTooltipModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,10 +13,15 @@ import {MatTooltipModule} from '@angular/material';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MatCardModule,
     FlexLayoutModule,
     PipesModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule
   ],
   exports: [SensorsComponent]
 })

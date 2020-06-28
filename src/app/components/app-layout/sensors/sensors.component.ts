@@ -11,11 +11,15 @@ import {Sensor} from '../../../models/sensor.model';
 export class SensorsComponent implements OnInit, OnDestroy {
 
   sensors: Sensor[];
+  searchValue: string;
+  searchByType: string;
   subscriptions: Subscription[] = [];
+  typeDropdown: string[];
 
   constructor(private sensorsService: SensorsService) { }
 
   ngOnInit(): void {
+    this.typeDropdown = [];
     this.getSensors();
   }
 
@@ -29,9 +33,25 @@ export class SensorsComponent implements OnInit, OnDestroy {
 
   getSensors() {
     this.sub = this.sensorsService.getSensors().subscribe(data => {
-      console.log(data, 'sensors');
       this.sensors = data;
+      Object.keys(this.groupSensorsByType(data, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
     });
+  }
+
+  groupSensorsByType(sensors: Sensor[], key: string) {
+    return sensors.reduce((sensor, item) => {
+      const group = item[key];
+      sensor[group] = sensor[group] || [];
+      sensor[group].push(item);
+      return sensor;
+    }, {});
+  }
+
+  onSelectItem(event) {
+    if (!event) {
+      return;
+    }
+    this.searchByType = event.value;
   }
 
 }

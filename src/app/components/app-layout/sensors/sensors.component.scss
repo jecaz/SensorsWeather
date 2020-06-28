@@ -1,5 +1,30 @@
 @import "../../../../styles/variables";
 
+::ng-deep .mat-select-panel {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  max-height: 500px !important;
+}
+
+.filter {
+  width: 30%;
+
+  &--icon {
+    position: absolute;
+    right: 2%;
+    top: 30%;
+    zoom: .6;
+  }
+
+  &--close-icon {
+    cursor: pointer;
+  }
+
+  &--search {
+    padding: 1.6rem;
+  }
+}
+
 .sensors-card {
   &-subtitle--main {
     display: block;
