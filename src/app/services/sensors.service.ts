@@ -1,4 +1,4 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Sensor} from '../models/sensor.model';
@@ -12,9 +12,11 @@ export class SensorsService {
 
   SERVER_URL: string = environment.urlSensors;
   selectedSensorId: BehaviorSubject<any>;
+  confirmedDelete: Subject<any>;
 
   constructor(private http: HttpClient) {
     this.selectedSensorId = new BehaviorSubject('');
+    this.confirmedDelete = new Subject();
   }
 
   getSelectedSensor() {
@@ -23,6 +25,14 @@ export class SensorsService {
 
   setSelectedSensor(id: any) {
     this.selectedSensorId.next(id);
+  }
+
+  getConfirmedDelete() {
+    return this.confirmedDelete.asObservable();
+  }
+
+  setConfirmedDelete(confirmedObj: any) {
+    this.confirmedDelete.next(confirmedObj);
   }
 
   getSensors() {
@@ -41,22 +51,26 @@ export class SensorsService {
   }
 
   getSensorById(id: any) {
-    const data = new HttpParams().set('id', id);
-    return this.http.get<Sensor[]>(this.SERVER_URL + '/sensors', { params: data })
+    return this.http.get<Sensor>(`${this.SERVER_URL}/sensors/${id}`)
       .pipe(
-        map(response => response.map(item => new Sensor(item))),
+        map(response => new Sensor(response)),
         catchError(this.handleError)
       );
   }
 
   updateSensor(sensor: Sensor) {
-    console.log();
     return this.http.put(`${this.SERVER_URL}/sensors/${sensor.id}`, sensor)
       .pipe(
         catchError(this.handleError)
       );
   }
 
+  deleteSensorById(id: any) {
+    return this.http.delete(`${this.SERVER_URL}/sensors/${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   handleError(error) {
     let errorMessage = '';

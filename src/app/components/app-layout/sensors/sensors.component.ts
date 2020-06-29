@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/index';
 import {SensorsService} from '../../../services/sensors.service';
 import {Sensor} from '../../../models/sensor.model';
-import {ActivatedRoute, Router} from "@angular/router";
+import {NotificationService} from '../../../services/notification.service';
 
 @Component({
   selector: 'app-sensors',
@@ -19,12 +19,12 @@ export class SensorsComponent implements OnInit, OnDestroy {
   selectedSensorId: Sensor;
 
   constructor(private sensorsService: SensorsService,
-              private activeRoute: ActivatedRoute,
-              private router: Router) { }
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.typeDropdown = [];
     this.getSensors();
+    this.sensorsService.getConfirmedDelete().subscribe(confirmedDeleteId => this.deleteSensor(confirmedDeleteId));
   }
 
   ngOnDestroy() {
@@ -38,7 +38,9 @@ export class SensorsComponent implements OnInit, OnDestroy {
   getSensors() {
     this.sub = this.sensorsService.getSensors().subscribe(data => {
       this.sensors = data;
-      Object.keys(this.groupSensorsByType(data, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
+      if (this.typeDropdown.length === 0) {
+        Object.keys(this.groupSensorsByType(data, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
+      }
     });
   }
 
@@ -58,12 +60,17 @@ export class SensorsComponent implements OnInit, OnDestroy {
     this.searchByType = event.value;
   }
 
-  redirectToEditPage(sensor: Sensor) {
-    this.router.navigate(['../sensor', sensor.id], { relativeTo: this.activeRoute });
-  }
-
   selectSensor(sensorId) {
     this.selectedSensorId = sensorId;
     this.sensorsService.setSelectedSensor(sensorId);
+  }
+
+  deleteSensor(id: any) {
+    this.sensorsService.deleteSensorById(id).subscribe(data => {
+      this.getSensors();
+      this.notificationService.openSnackBar('Sensor successfully deleted!', '', 'success');
+    }, err => {
+      this.notificationService.openSnackBar(err, '', 'error');
+    });
   }
 }

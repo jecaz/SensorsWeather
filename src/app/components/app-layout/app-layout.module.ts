@@ -5,6 +5,7 @@ import {SensorsModule} from './sensors/sensors.module';
 import {RouterModule} from '@angular/router';
 import {SensorNewModule} from './sensor-new/sensor-new.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {DialogModule} from '../../common/dialog/dialog.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     SensorNewModule,
     MatIconModule,
     FlexLayoutModule,
-    MatButtonModule
+    MatButtonModule,
+    DialogModule
   ],
   exports: [AppLayoutComponent]
 })

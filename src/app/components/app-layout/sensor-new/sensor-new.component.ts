@@ -126,7 +126,7 @@ export class SensorNewComponent implements OnInit, OnDestroy {
 
   getSensorById(id: any) {
     this.sub = this.sensorsService.getSensorById(id).subscribe(data => {
-      this.form.patchValue(data[0]);
+      this.form.patchValue(data);
       this.form.get('lastUpdate').setValue(moment(this.form.get('lastUpdate').value).format('HH:mm'));
     }, err => {
       this.notificationService.openSnackBar(err, '', 'error');

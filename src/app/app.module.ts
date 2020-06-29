@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import {AppLayoutRoutingModule} from './routes';
 import {AppLayoutModule} from './components/app-layout/app-layout.module';
+import {DialogModule} from './common/dialog/dialog.module';
+import {DialogComponent} from './common/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,10 @@ import {AppLayoutModule} from './components/app-layout/app-layout.module';
     BrowserAnimationsModule,
     HttpClientModule,
     AppLayoutRoutingModule,
-    AppLayoutModule
+    AppLayoutModule,
+    DialogModule
   ],
+  entryComponents: [DialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

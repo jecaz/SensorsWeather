@@ -1,5 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {SensorsService} from '../../services/sensors.service';
+import {MatDialog} from '@angular/material';
+import {DialogComponent} from '../../common/dialog/dialog.component';
 
 @Component({
   selector: 'app-app-layout',
@@ -13,7 +15,8 @@ export class AppLayoutComponent implements OnInit {
   selectedSensorId: any;
 
   constructor(private sensorService: SensorsService,
-              private cdref: ChangeDetectorRef) { }
+              private cdref: ChangeDetectorRef,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isDisabledButtons(true);
@@ -34,5 +37,19 @@ export class AppLayoutComponent implements OnInit {
   isDisabledButtons(isDisabled: boolean) {
     this.editButton._disabled = isDisabled;
     this.deleteButton._disabled = isDisabled;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.sensorService.setConfirmedDelete(this.selectedSensorId);
+        this.isDisabledButtons(true);
+        this.selectedSensorId = '';
+      }
+    });
   }
 }
