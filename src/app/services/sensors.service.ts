@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Sensor} from '../models/sensor.model';
 import { map, retry, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import {BehaviorSubject, Subject, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,19 @@ import { throwError } from 'rxjs';
 export class SensorsService {
 
   SERVER_URL: string = environment.urlSensors;
+  selectedSensorId: BehaviorSubject<any>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.selectedSensorId = new BehaviorSubject('');
+  }
+
+  getSelectedSensor() {
+    return this.selectedSensorId.asObservable();
+  }
+
+  setSelectedSensor(id: any) {
+    this.selectedSensorId.next(id);
+  }
 
   getSensors() {
     return this.http.get<Sensor[]>(this.SERVER_URL + '/sensors')
@@ -28,6 +39,24 @@ export class SensorsService {
         catchError(this.handleError)
       );
   }
+
+  getSensorById(id: any) {
+    const data = new HttpParams().set('id', id);
+    return this.http.get<Sensor[]>(this.SERVER_URL + '/sensors', { params: data })
+      .pipe(
+        map(response => response.map(item => new Sensor(item))),
+        catchError(this.handleError)
+      );
+  }
+
+  updateSensor(sensor: Sensor) {
+    console.log();
+    return this.http.put(`${this.SERVER_URL}/sensors/${sensor.id}`, sensor)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   handleError(error) {
     let errorMessage = '';

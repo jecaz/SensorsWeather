@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/index';
 import {SensorsService} from '../../../services/sensors.service';
 import {Sensor} from '../../../models/sensor.model';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-sensors',
@@ -15,8 +16,11 @@ export class SensorsComponent implements OnInit, OnDestroy {
   searchByType: string;
   subscriptions: Subscription[] = [];
   typeDropdown: string[];
+  selectedSensorId: Sensor;
 
-  constructor(private sensorsService: SensorsService) { }
+  constructor(private sensorsService: SensorsService,
+              private activeRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.typeDropdown = [];
@@ -52,5 +56,14 @@ export class SensorsComponent implements OnInit, OnDestroy {
       return;
     }
     this.searchByType = event.value;
+  }
+
+  redirectToEditPage(sensor: Sensor) {
+    this.router.navigate(['../sensor', sensor.id], { relativeTo: this.activeRoute });
+  }
+
+  selectSensor(sensorId) {
+    this.selectedSensorId = sensorId;
+    this.sensorsService.setSelectedSensor(sensorId);
   }
 }

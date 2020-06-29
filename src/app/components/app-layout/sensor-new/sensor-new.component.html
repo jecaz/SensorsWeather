@@ -52,11 +52,9 @@
         <input matInput formControlName="value" />
         <mat-error *ngIf="form.controls['value'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
-      <mat-form-field style="width: 50%">
+      <mat-form-field class="sensor-form--input-field">
         <mat-label>Last update</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="lastUpdate">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput formControlName="lastUpdate" type="time" />
         <mat-error *ngIf="form.controls['lastUpdate'].hasError('isRequired')">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="end">

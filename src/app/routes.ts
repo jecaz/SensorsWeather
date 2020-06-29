@@ -10,7 +10,8 @@ const appRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'sensors', pathMatch: 'full' },
       { path: 'sensors', component: SensorsComponent },
-      { path: 'sensor', component: SensorNewComponent }
+      { path: 'sensor', component: SensorNewComponent },
+      { path: 'sensor/:id', component: SensorNewComponent }
     ]},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

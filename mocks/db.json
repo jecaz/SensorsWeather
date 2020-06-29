@@ -27,7 +27,7 @@
       "path": "DemoDevice/Pressure",
       "unitSymbol": "mb",
       "value": "1003.4",
-      "lastUpdate": 1507211004000,
+      "lastUpdate": "2020-06-29T22:00:00.000Z",
       "type": "FEED"
     },
     {
@@ -71,104 +71,134 @@
       "type": "ALARM"
     },
     {
-      "name": "sdfsd",
-      "image": "./../../../assets/sdfd",
+      "id": 8,
+      "name": "Feed",
+      "image": "images/ico_humidity.svg",
       "path": "df",
       "unitSymbol": "sdf",
       "value": "df",
-      "lastUpdate": "2020-06-10T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 8
+      "lastUpdate": 1593450279898,
+      "type": "FEED"
     },
     {
-      "name": "aaa",
-      "image": "./../../../assets/eee",
+      "id": 9,
+      "name": "actuator",
+      "image": "images/ico_slider.svg",
       "path": "ttt",
       "unitSymbol": "rrr",
       "value": "eee",
-      "lastUpdate": "2020-06-09T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 9
+      "lastUpdate": 1593428425300,
+      "type": "ACTUATOR"
     },
     {
+      "id": 10,
       "name": "df",
-      "image": "./../../../assets/dsf",
+      "image": "images/ico_pressure.svg",
       "path": "df",
       "unitSymbol": "df",
       "value": "sdf",
-      "lastUpdate": "2020-06-10T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 10
+      "lastUpdate": 1593396018466,
+      "type": "ACTUATORS"
     },
     {
+      "id": 11,
       "name": "df",
-      "image": "./../../../assets/sdf",
+      "image": "images/ico_pressure.svg",
       "path": "sdf",
       "unitSymbol": "sdf",
       "value": "sdf",
-      "lastUpdate": "2020-06-17T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 11
+      "lastUpdate": 1593428217464,
+      "type": "FEED"
     },
     {
+      "id": 12,
       "name": "fd",
-      "image": "sdf",
+      "image": "images/ico_switcher.svg",
       "path": "sdf",
       "unitSymbol": "sdf",
       "value": "sdf",
-      "lastUpdate": "2020-06-09T22:00:00.000Z",
-      "type": "FEED",
-      "id": 12
+      "lastUpdate": 1593392757137,
+      "type": "FEED"
     },
     {
+      "id": 13,
       "name": "sdf",
-      "image": "https://www.google.com/search?sxsrf=ALeKk0251B7n7rvKU5DOtihD-73iEL5_Tg:1593364465217&source=univ&tbm=isch&q=beatch+images&sa=X&ved=2ahUKEwi6pcmXgaXqAhWFsnEKHYXJCvoQsAR6BAgKEAE&biw=1600&bih=757#imgrc=vJi4IMaJmE1bfM",
+      "image": "images/ico_pressure.svg",
       "path": "sdf",
       "unitSymbol": "sdf",
       "value": "sdf",
-      "lastUpdate": "2020-06-16T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 13
+      "lastUpdate": 1593381885731,
+      "type": "ACTUATORS"
     },
     {
+      "id": 14,
       "name": "test",
       "image": "images/ico_switcher.svg",
       "path": "sdf",
       "unitSymbol": "t",
       "value": "sdf",
-      "lastUpdate": "2020-06-29T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 14
+      "lastUpdate": 1593435861524,
+      "type": "ACTUATORS"
     },
     {
+      "id": 15,
       "name": "hello there",
       "image": "images/ico_temperature.svg",
       "path": "e",
       "unitSymbol": "t",
       "value": "w",
-      "lastUpdate": "2020-06-17T22:00:00.000Z",
-      "type": "FEED",
-      "id": 15
+      "lastUpdate": 1593403203770,
+      "type": "FEED"
     },
     {
+      "id": 16,
       "name": "cao",
       "image": "images/ico_humidity.svg",
       "path": "a",
       "unitSymbol": "te",
       "value": "e",
-      "lastUpdate": "2020-06-17T22:00:00.000Z",
-      "type": "ACTUATORS",
-      "id": 16
+      "lastUpdate": 1593381678068,
+      "type": "ACTUATORS"
     },
     {
+      "id": 17,
       "name": "tttt",
       "image": "images/ico_pressure.svg",
       "path": "eee",
       "unitSymbol": "#",
       "value": "www",
-      "lastUpdate": "2020-06-23T22:00:00.000Z",
-      "type": "FEED",
-      "id": 17
+      "lastUpdate": 1593381843204,
+      "type": "FEED"
+    },
+    {
+      "id": 18,
+      "name": "hello edit",
+      "image": "images/ico_pressure.svg",
+      "path": "eee",
+      "unitSymbol": "aa",
+      "value": "rrr",
+      "lastUpdate": 1593383812580,
+      "type": "ACTUATOR"
+    },
+    {
+      "id": 19,
+      "name": "hello thereeee",
+      "image": "images/ico_temperature.svg",
+      "path": "e",
+      "unitSymbol": "t",
+      "value": "w",
+      "lastUpdate": 1593421233241,
+      "type": "ALARM"
+    },
+    {
+      "id": 20,
+      "name": "opet",
+      "image": "images/ico_pressure.svg",
+      "path": "wwww",
+      "unitSymbol": "oooo",
+      "value": "df",
+      "lastUpdate": 1593399613829,
+      "type": "ACTUATOR"
     }
   ]
 }
