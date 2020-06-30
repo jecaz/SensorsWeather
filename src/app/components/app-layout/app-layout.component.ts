@@ -1,8 +1,10 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SensorsService} from '../../services/sensors.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSidenav} from '@angular/material';
 import {DialogComponent} from '../../common/dialog/dialog.component';
 import {Subscription} from 'rxjs/index';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NotificationService} from '../../services/notification.service';
 
 @Component({
   selector: 'app-app-layout',
@@ -18,7 +20,10 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   constructor(private sensorService: SensorsService,
               private cdref: ChangeDetectorRef,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private activeRoute: ActivatedRoute,
+              private router: Router,
+              private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.isDisabledButtons(true);
@@ -65,5 +70,23 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         this.selectedSensorId = '';
       }
     });
+  }
+
+  goToEditPage(sidenav: MatSidenav) {
+    if (!this.selectedSensorId) {
+      this.notificationService.openSnackBar('First select sensor!', 'Close', 'warn');
+      return;
+    }
+    sidenav.toggle();
+    this.router.navigate(['../sensor/' + this.selectedSensorId], { relativeTo: this.activeRoute.parent });
+  }
+
+  goToDelete(sidenav: MatSidenav) {
+    if (!this.selectedSensorId) {
+      this.notificationService.openSnackBar('First select sensor!', 'Close', 'warn');
+      return;
+    }
+    sidenav.toggle();
+    this.openDialog();
   }
 }

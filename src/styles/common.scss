@@ -77,12 +77,21 @@
   max-height: 300px !important;
 }
 
+.mat-sidenav {
+  top: 56px !important;
+  width: 40%;
+}
+
 .error {
   @include message-display(10px, $error-message-col, $error-message-bgCol, $error-message-borderCol, 400px);
 }
 
 .success {
   @include message-display(10px, $success-col, $success-bgCol, $success-borderCol, 200px);
+}
+
+.warn {
+  @include message-display(10px, $warn-col, $warn-bgCol, $warn-borderCol, 200px);
 }
 
 .filter--search {
