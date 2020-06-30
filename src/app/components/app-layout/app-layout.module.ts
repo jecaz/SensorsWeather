@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {AppLayoutComponent} from './app-layout.component';
-import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {SensorsModule} from './sensors/sensors.module';
 import {RouterModule} from '@angular/router';
 import {SensorNewModule} from './sensor-new/sensor-new.module';
@@ -19,7 +19,8 @@ import {DialogModule} from '../../common/dialog/dialog.module';
     MatIconModule,
     FlexLayoutModule,
     MatButtonModule,
-    DialogModule
+    DialogModule,
+    MatTooltipModule
   ],
   exports: [AppLayoutComponent]
 })

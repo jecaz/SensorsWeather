@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>{{'Delete sensor'}}</h1>
+<h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content>
-  <p>Are you sure you want to delete sensor?</p>
+  <p>{{data.content}}</p>
 </div>
 <div mat-dialog-actions fxLayoutAlign="space-around">
-  <button mat-raised-button color="primary" (click)="onNoClick()" style="width: 8rem;">No</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="'yes'" cdkFocusInitial style="width: 8rem;">Ok</button>
+  <button mat-raised-button color="primary" (click)="onNoClick()" style="width: 8rem;">{{data.reject}}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="'yes'" cdkFocusInitial style="width: 8rem;">{{data.accept}}</button>
 </div>

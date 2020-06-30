@@ -61,12 +61,17 @@ export class SensorsComponent implements OnInit, OnDestroy {
   }
 
   selectSensor(sensorId) {
+    if (this.selectedSensorId === sensorId) {
+      this.selectedSensorId = null;
+      this.sensorsService.setSelectedSensor('');
+      return;
+    }
     this.selectedSensorId = sensorId;
     this.sensorsService.setSelectedSensor(sensorId);
   }
 
   deleteSensor(id: any) {
-    this.sensorsService.deleteSensorById(id).subscribe(data => {
+    this.sub = this.sensorsService.deleteSensorById(id).subscribe(data => {
       this.getSensors();
       this.notificationService.openSnackBar('Sensor successfully deleted!', '', 'success');
     }, err => {
