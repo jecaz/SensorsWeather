@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Sensor} from '../models/sensor.model';
 import { map, retry, catchError } from 'rxjs/operators';
-import {BehaviorSubject, Subject, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SensorsService {
 
-  SERVER_URL: string = environment.urlSensors;
+  API_URL: string = environment.urlSensors;
   selectedSensorId: BehaviorSubject<any>;
   confirmedDelete: Subject<any>;
 
@@ -35,15 +35,15 @@ export class SensorsService {
     this.confirmedDelete.next(confirmedObj);
   }
 
-  getSensors() {
-    return this.http.get<Sensor[]>(this.SERVER_URL + '/sensors')
+  getSensors(): Observable<Sensor[]> {
+    return this.http.get<Sensor[]>(this.API_URL + '/sensors')
       .pipe(
         map(response => response.map(item => new Sensor(item)))
       );
   }
 
   createSensor(sensor: Sensor) {
-    return this.http.post<Sensor>(this.SERVER_URL + '/sensors', sensor)
+    return this.http.post<Sensor>(this.API_URL + '/sensors', sensor)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -51,7 +51,7 @@ export class SensorsService {
   }
 
   getSensorById(id: any) {
-    return this.http.get<Sensor>(`${this.SERVER_URL}/sensors/${id}`)
+    return this.http.get<Sensor>(`${this.API_URL}/sensors/${id}`)
       .pipe(
         map(response => new Sensor(response)),
         catchError(this.handleError)
@@ -59,14 +59,14 @@ export class SensorsService {
   }
 
   updateSensor(sensor: Sensor) {
-    return this.http.put(`${this.SERVER_URL}/sensors/${sensor.id}`, sensor)
+    return this.http.put(`${this.API_URL}/sensors/${sensor.id}`, sensor)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   deleteSensorById(id: any) {
-    return this.http.delete(`${this.SERVER_URL}/sensors/${id}`)
+    return this.http.delete(`${this.API_URL}/sensors/${id}`)
       .pipe(
         catchError(this.handleError)
       );

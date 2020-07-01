@@ -8,6 +8,10 @@ import {AppLayoutRoutingModule} from './routes';
 import {AppLayoutModule} from './components/app-layout/app-layout.module';
 import {DialogModule} from './common/dialog/dialog.module';
 import {DialogComponent} from './common/dialog/dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import {SensorReducer} from './store/reducers/sensor.reducer';
+import {SensorEffects} from './store/effects/sensor.effects';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,9 @@ import {DialogComponent} from './common/dialog/dialog.component';
     HttpClientModule,
     AppLayoutRoutingModule,
     AppLayoutModule,
-    DialogModule
+    DialogModule,
+    EffectsModule.forRoot([SensorEffects]),
+    StoreModule.forRoot({ sensors: SensorReducer })
   ],
   entryComponents: [DialogComponent],
   providers: [],
