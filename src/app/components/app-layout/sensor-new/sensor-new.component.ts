@@ -6,6 +6,10 @@ import {NotificationService} from '../../../services/notification.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/index';
 import * as moment from 'moment';
+import SensorState from '../../../store/states/sensor.state';
+import {Store} from '@ngrx/store';
+import * as SensorActions from '../../../store/actions/sensor.action';
+import {Actions, ofType} from '@ngrx/effects';
 
 @Component({
   selector: 'app-sensor-new',
@@ -23,7 +27,10 @@ export class SensorNewComponent implements OnInit, OnDestroy {
   constructor(private sensorsService: SensorsService,
               private notificationService: NotificationService,
               private activeRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<{sensors: SensorState}>,
+              private actions$: Actions) {
+  }
 
   ngOnInit() {
     this.activeRoute.params.subscribe(p => {
@@ -44,6 +51,21 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       {label: 'Highway board', value: 'images/ico_string.svg'},
       {label: 'High Humidity', value: 'images/ico_alarm.svg'},
     ];
+    this.sub = this.actions$.pipe(
+      ofType(SensorActions.ErrorSensorAction)
+    ).subscribe((error: any) =>
+      this.notificationService.openSnackBar(`Error Code: ${error.status}\nMessage: ${error.message}`, '', 'error'));
+    this.sub = this.actions$.pipe(
+      ofType(SensorActions.SuccessCreateSensorAction, SensorActions.SuccessUpdateSensorAction)
+    ).subscribe(action => {
+      if (action.type === '[Sensor] - Success Update Sensor') {
+        this.notificationService.openSnackBar('Sensor successfully updated!', '', 'success');
+        this.router.navigate(['../sensors'], { relativeTo: this.activeRoute.parent });
+        return;
+      }
+      this.notificationService.openSnackBar('Sensor successfully created!', '', 'success');
+      this.router.navigate(['../sensors'], { relativeTo: this.activeRoute });
+    });
   }
 
   ngOnDestroy() {
@@ -89,12 +111,12 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       return;
     }
     const sensor: Sensor = new Sensor(this.form.getRawValue());
+    sensor.lastUpdate = this.getDateFromString(sensor.lastUpdate);
     if (this.id) {
       sensor.id = this.id;
-      sensor.lastUpdate = this.getDateFromString(sensor.lastUpdate);
-      this.updateSensor(sensor);
+      this.store.dispatch(SensorActions.BeginUpdateSensorAction({ payload: sensor }));
     } else {
-      this.createSensor(sensor);
+      this.store.dispatch(SensorActions.BeginCreateSensorAction({ payload: sensor }));
     }
   }
 
@@ -104,24 +126,6 @@ export class SensorNewComponent implements OnInit, OnDestroy {
     date.setHours(timeArray[0]);
     date.setMinutes(timeArray[1]);
     return moment(date).valueOf();
-  }
-
-  createSensor(sensor: Sensor) {
-    this.sub = this.sensorsService.createSensor(sensor).subscribe(data => {
-      this.notificationService.openSnackBar('Sensor successfully created!', '', 'success');
-      this.router.navigate(['../sensors'], { relativeTo: this.activeRoute });
-    }, err => {
-      this.notificationService.openSnackBar(err, '', 'error');
-    });
-  }
-
-  updateSensor(sensor: Sensor) {
-    this.sub = this.sensorsService.updateSensor(sensor).subscribe(data => {
-      this.notificationService.openSnackBar('Sensor successfully updated!', '', 'success');
-      this.router.navigate(['../sensors'], { relativeTo: this.activeRoute.parent });
-    }, err => {
-      this.notificationService.openSnackBar(err, '', 'error');
-    });
   }
 
   getSensorById(id: any) {

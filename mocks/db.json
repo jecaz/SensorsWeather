@@ -89,6 +89,56 @@
       "value": "eee",
       "lastUpdate": 1593428425300,
       "type": "ACTUATOR"
+    },
+    {
+      "name": "test",
+      "image": "images/ico_pressure.svg",
+      "path": "eee",
+      "unitSymbol": "ttt",
+      "value": "aaa",
+      "lastUpdate": 1593588206189,
+      "type": "FEED",
+      "id": 10
+    },
+    {
+      "name": "hello",
+      "image": "images/ico_switcher.svg",
+      "path": "qqqw",
+      "unitSymbol": "%",
+      "value": "ww",
+      "lastUpdate": 1593638797252,
+      "type": "ALARM",
+      "id": 11
+    },
+    {
+      "id": 12,
+      "name": "qqq",
+      "image": "images/ico_humidity.svg",
+      "path": "qq",
+      "unitSymbol": "qq",
+      "value": "qq",
+      "lastUpdate": 1593637754614,
+      "type": "FEED"
+    },
+    {
+      "name": "eeeww",
+      "image": "images/ico_pressure.svg",
+      "path": "ww",
+      "unitSymbol": "www",
+      "value": "ww",
+      "lastUpdate": 1593609287668,
+      "type": "FEED",
+      "id": 13
+    },
+    {
+      "id": 14,
+      "name": "ttt",
+      "image": "images/ico_switcher.svg",
+      "path": "tt",
+      "unitSymbol": "tt",
+      "value": "tt",
+      "lastUpdate": 1593638422183,
+      "type": "ALARM"
     }
   ]
 }
