@@ -44,9 +44,6 @@ export class SensorsService {
 
   createSensor(sensor: Sensor) {
     return this.http.post<Sensor>(this.API_URL + '/sensors', sensor);
-      // .pipe(
-      //   catchError(this.handleError)
-      // );
   }
 
   getSensorById(id: any) {
@@ -59,9 +56,6 @@ export class SensorsService {
 
   updateSensor(sensor: Sensor) {
     return this.http.put(`${this.API_URL}/sensors/${sensor.id}`, sensor);
-      // .pipe(
-      //   catchError(this.handleError)
-      // );
   }
 
   deleteSensorById(id: any) {

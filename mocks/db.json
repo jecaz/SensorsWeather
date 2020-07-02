@@ -114,31 +114,11 @@
       "id": 12,
       "name": "qqq",
       "image": "images/ico_humidity.svg",
-      "path": "qq",
+      "path": "aaaa",
       "unitSymbol": "qq",
       "value": "qq",
-      "lastUpdate": 1593637754614,
+      "lastUpdate": 1593724195974,
       "type": "FEED"
-    },
-    {
-      "name": "eeeww",
-      "image": "images/ico_pressure.svg",
-      "path": "ww",
-      "unitSymbol": "www",
-      "value": "ww",
-      "lastUpdate": 1593609287668,
-      "type": "FEED",
-      "id": 13
-    },
-    {
-      "id": 14,
-      "name": "ttt",
-      "image": "images/ico_switcher.svg",
-      "path": "tt",
-      "unitSymbol": "tt",
-      "value": "tt",
-      "lastUpdate": 1593638422183,
-      "type": "ALARM"
     }
   ]
 }

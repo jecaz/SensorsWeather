@@ -1,5 +1,5 @@
 
-import { Action, createReducer, on } from '@ngrx/store';
+import {Action, createReducer, on} from '@ngrx/store';
 import {initializeState} from '../states/sensor.state';
 import SensorState from '../states/sensor.state';
 import * as SensorActions from '../actions/sensor.action';

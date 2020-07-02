@@ -59,11 +59,11 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       ofType(SensorActions.SuccessCreateSensorAction, SensorActions.SuccessUpdateSensorAction)
     ).subscribe(action => {
       if (action.type === '[Sensor] - Success Update Sensor') {
-        this.notificationService.openSnackBar('Sensor successfully updated!', '', 'success');
+        this.notificationService.openSnackBar(this.displaySuccessMessage('updated'), '', 'success');
         this.router.navigate(['../sensors'], { relativeTo: this.activeRoute.parent });
         return;
       }
-      this.notificationService.openSnackBar('Sensor successfully created!', '', 'success');
+      this.notificationService.openSnackBar(this.displaySuccessMessage('created'), '', 'success');
       this.router.navigate(['../sensors'], { relativeTo: this.activeRoute });
     });
   }
@@ -135,5 +135,9 @@ export class SensorNewComponent implements OnInit, OnDestroy {
     }, err => {
       this.notificationService.openSnackBar(err, '', 'error');
     });
+  }
+
+  displaySuccessMessage(partOfMessage: string) {
+    return`Sensor successfully ${partOfMessage}!`;
   }
 }
