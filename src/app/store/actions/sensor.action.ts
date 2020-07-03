@@ -2,12 +2,12 @@
 import {Sensor} from '../../models/sensor.model';
 import { createAction, props } from '@ngrx/store';
 
-export const GetSensorAction = createAction('[Sensor] - Get Sensor');
+export const GetSensorsAction = createAction('[Sensor] - Get Sensors');
 
-export const BeginGetSensorAction = createAction('[Sensor] - Begin Get Sensor');
+export const BeginGetSensorsAction = createAction('[Sensor] - Begin Get Sensors');
 
-export const SuccessGetSensorAction = createAction(
-  '[Sensor] - Success Get Sensor',
+export const SuccessGetSensorsAction = createAction(
+  '[Sensor] - Success Get Sensors',
   props<{ payload: Sensor[] }>()
 );
 
@@ -39,6 +39,21 @@ export const BeginUpdateSensorAction = createAction(
 export const SuccessUpdateSensorAction = createAction(
   '[Sensor] - Success Update Sensor',
   props<{ payload: Sensor }>()
+);
+
+export const DeleteSensorAction = createAction(
+  '[Sensor] - Delete Sensor',
+  props<{ payload: Sensor }>()
+);
+
+export const BeginDeleteSensorAction = createAction(
+  '[Sensor] - Begin Delete Sensor',
+  props<{ payload: number }>()
+);
+
+export const SuccessDeleteSensorAction = createAction(
+  '[Sensor] - Success Delete Sensor',
+  props<{ payload: number }>()
 );
 
 export const ErrorSensorAction = createAction('[Sensor] - Error', props<Error>());

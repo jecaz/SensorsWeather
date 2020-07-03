@@ -5,6 +5,10 @@ import {DialogComponent} from '../../common/dialog/dialog.component';
 import {Subscription} from 'rxjs/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../../services/notification.service';
+import {Actions, ofType} from '@ngrx/effects';
+import SensorState from '../../store/states/sensor.state';
+import {Store} from '@ngrx/store';
+import * as SensorActions from '../../store/actions/sensor.action';
 
 @Component({
   selector: 'app-app-layout',
@@ -23,19 +27,29 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
               public dialog: MatDialog,
               private activeRoute: ActivatedRoute,
               private router: Router,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService,
+              private store: Store<{sensors: SensorState}>,
+              private actions$: Actions) { }
 
   ngOnInit(): void {
     this.isDisabledButtons(true);
     this.sub = this.sensorService.getSelectedSensor().subscribe(sensorId => {
       if (sensorId) {
-        this.selectedSensorId = sensorId;
-        this.isDisabledButtons(false);
+        this.setSelectedSensorId(sensorId, false);
         this.cdref.detectChanges();
         return;
       }
-      this.selectedSensorId = '';
-      this.isDisabledButtons(true);
+      this.setSelectedSensorId('', true);
+    });
+    this.sub = this.actions$.pipe(
+      ofType(SensorActions.ErrorSensorAction)
+    ).subscribe((error: any) =>
+      this.notificationService.openSnackBar(`Error Code: ${error.status}\nMessage: ${error.message}`, '', 'error')
+    );
+    this.sub = this.actions$.pipe(
+      ofType(SensorActions.SuccessDeleteSensorAction)
+    ).subscribe((deletedSensor: any) => {
+        this.notificationService.openSnackBar('Sensor successfully deleted!', '', 'success');
     });
   }
 
@@ -47,9 +61,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  resetSelectedSensorId() {
-    this.selectedSensorId = '';
-    this.isDisabledButtons(true);
+  setSelectedSensorId(sensorId: any, isDisabledButtons) {
+    this.selectedSensorId = sensorId;
+    this.isDisabledButtons(isDisabledButtons);
   }
 
   isDisabledButtons(isDisabled: boolean) {
@@ -62,19 +76,17 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
       width: '350px',
       data: {title: 'Delete sensor', content: 'Are you sure you want to delete sensor?', accept: 'Ok', reject: 'No'}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sensorService.setConfirmedDelete(this.selectedSensorId);
-        this.isDisabledButtons(true);
-        this.selectedSensorId = '';
+        this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: this.selectedSensorId }));
+        this.setSelectedSensorId('', true);
       }
     });
   }
 
   goToEditPage(sidenav: MatSidenav) {
     if (!this.selectedSensorId) {
-      this.notificationService.openSnackBar('First select sensor!', 'Close', 'warn');
+      this.displayMessage();
       return;
     }
     sidenav.toggle();
@@ -83,10 +95,14 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   goToDelete(sidenav: MatSidenav) {
     if (!this.selectedSensorId) {
-      this.notificationService.openSnackBar('First select sensor!', 'Close', 'warn');
+      this.displayMessage();
       return;
     }
     sidenav.toggle();
     this.openDialog();
+  }
+
+  displayMessage() {
+    this.notificationService.openSnackBar('First select sensor!', 'Close', 'warn');
   }
 }

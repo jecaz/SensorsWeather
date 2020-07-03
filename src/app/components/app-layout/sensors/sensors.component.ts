@@ -2,12 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/index';
 import {SensorsService} from '../../../services/sensors.service';
 import {Sensor} from '../../../models/sensor.model';
-import {NotificationService} from '../../../services/notification.service';
 import SensorState from '../../../store/states/sensor.state';
 import { select, Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import * as SensorActions from '../../../store/actions/sensor.action';
-import * as fromSensors from './../../../store/reducers/index';
+import * as fromSensors from '../../../store/selectors/sensors.selectors';
 
 @Component({
   selector: 'app-sensors',
@@ -23,10 +22,8 @@ export class SensorsComponent implements OnInit, OnDestroy {
   typeDropdown: string[];
   selectedSensorId: Sensor;
   sensors$: Observable<SensorState>;
-  sensorError: any | Error = null;
 
   constructor(private sensorsService: SensorsService,
-              private notificationService: NotificationService,
               private store: Store<{sensors: SensorState}>) {
     this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
   }
@@ -37,15 +34,10 @@ export class SensorsComponent implements OnInit, OnDestroy {
       .pipe(
         map(x => {
           this.sensors = x.Sensors;
-          if (this.typeDropdown.length === 0) {
-            Object.keys(this.groupSensorsByType(this.sensors, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
-          }
-          this.sensorError = x.SensorError;
+          this.setTypeDropdown(this.sensors);
         })
       ).subscribe();
-
-    this.store.dispatch(SensorActions.BeginGetSensorAction());
-    this.sensorsService.getConfirmedDelete().subscribe(confirmedDeleteId => this.deleteSensor(confirmedDeleteId));
+    this.store.dispatch(SensorActions.BeginGetSensorsAction());
   }
 
   ngOnDestroy() {
@@ -54,15 +46,6 @@ export class SensorsComponent implements OnInit, OnDestroy {
 
   private set sub(sub: Subscription) {
     this.subscriptions.push(sub);
-  }
-
-  getSensors() {
-    this.sub = this.sensorsService.getSensors().subscribe(data => {
-      this.sensors = data;
-      if (this.typeDropdown.length === 0) {
-        Object.keys(this.groupSensorsByType(data, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
-      }
-    });
   }
 
   groupSensorsByType(sensors: Sensor[], key: string) {
@@ -83,20 +66,20 @@ export class SensorsComponent implements OnInit, OnDestroy {
 
   selectSensor(sensorId) {
     if (this.selectedSensorId === sensorId) {
-      this.selectedSensorId = null;
-      this.sensorsService.setSelectedSensor('');
+      this.setSelectSensorId('');
       return;
     }
+    this.setSelectSensorId(sensorId);
+  }
+
+  setSelectSensorId(sensorId) {
     this.selectedSensorId = sensorId;
     this.sensorsService.setSelectedSensor(sensorId);
   }
 
-  deleteSensor(id: any) {
-    this.sub = this.sensorsService.deleteSensorById(id).subscribe(data => {
-      this.getSensors();
-      this.notificationService.openSnackBar('Sensor successfully deleted!', '', 'success');
-    }, err => {
-      this.notificationService.openSnackBar(err, '', 'error');
-    });
+  setTypeDropdown(sensors: Sensor[]) {
+    if (this.typeDropdown.length === 0) {
+      Object.keys(this.groupSensorsByType(sensors, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
+    }
   }
 }

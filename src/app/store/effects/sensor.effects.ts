@@ -14,11 +14,11 @@ export class SensorEffects {
 
   GetSensors$: Observable<Action> = createEffect(() =>
       this.action$.pipe(
-      ofType(SensorActions.BeginGetSensorAction),
+      ofType(SensorActions.BeginGetSensorsAction),
       mergeMap(action =>
         this.sensorsService.getSensors().pipe(
           map((sensors: Sensor[]) => {
-            return SensorActions.SuccessGetSensorAction({ payload: sensors });
+            return SensorActions.SuccessGetSensorsAction({ payload: sensors });
           }),
           catchError((error: Error) => {
             return of(SensorActions.ErrorSensorAction(error));
@@ -33,13 +33,13 @@ export class SensorEffects {
       ofType(SensorActions.BeginCreateSensorAction),
       mergeMap(action =>
         this.sensorsService.createSensor(action.payload).pipe(
-            map((data: Sensor) => {
-              return SensorActions.SuccessCreateSensorAction({ payload: data });
-            }),
-            catchError((error: any) => {
-              return of(SensorActions.ErrorSensorAction(error));
-            })
-          )
+          map((data: Sensor) => {
+            return SensorActions.SuccessCreateSensorAction({ payload: data });
+          }),
+          catchError((error: any) => {
+            return of(SensorActions.ErrorSensorAction(error));
+          })
+        )
       )
     )
   );
@@ -51,6 +51,22 @@ export class SensorEffects {
         this.sensorsService.updateSensor(action.payload).pipe(
           map((data: Sensor) => {
             return SensorActions.SuccessUpdateSensorAction({ payload: data });
+          }),
+          catchError((error: any) => {
+            return of(SensorActions.ErrorSensorAction(error));
+          })
+        )
+      )
+    )
+  );
+
+  DeleteSensor$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(SensorActions.BeginDeleteSensorAction),
+      mergeMap(action =>
+        this.sensorsService.deleteSensorById(action.payload).pipe(
+          map((data: Sensor) => {
+            return SensorActions.SuccessDeleteSensorAction({ payload: action.payload });
           }),
           catchError((error: any) => {
             return of(SensorActions.ErrorSensorAction(error));

@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>{{data.title}}</h1>
+<h1 mat-dialog-title style="margin: 0 !important;">{{data.title}}</h1>
 <div mat-dialog-content>
   <p>{{data.content}}</p>
 </div>
 <div mat-dialog-actions fxLayoutAlign="space-around">
-  <button mat-raised-button color="primary" (click)="onNoClick()" style="width: 8rem;">{{data.reject}}</button>
   <button mat-raised-button color="warn" [mat-dialog-close]="'yes'" cdkFocusInitial style="width: 8rem;">{{data.accept}}</button>
+  <button mat-raised-button color="primary" (click)="onNoClick()" style="width: 8rem;">{{data.reject}}</button>
 </div>

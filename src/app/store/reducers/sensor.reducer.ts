@@ -5,22 +5,29 @@ import SensorState from '../states/sensor.state';
 import * as SensorActions from '../actions/sensor.action';
 import {Sensor} from '../../models/sensor.model';
 
-export const intialState = initializeState();
+export const initialState = initializeState();
 
 const reducer = createReducer(
-  intialState,
-  on(SensorActions.GetSensorAction, state => state),
+  initialState,
+  on(SensorActions.GetSensorsAction, state => state),
   on(SensorActions.CreateSensorAction, (state: SensorState, sensor: Sensor) => {
     return { ...state, Sensors: [...state.Sensors, sensor], SensorError: null };
   }),
   on(SensorActions.UpdateSensorAction, (state: SensorState, sensor: Sensor) => {
     return { ...state, Sensors: [...state.Sensors, sensor], SensorError: null };
   }),
-  on(SensorActions.SuccessGetSensorAction, (state: SensorState, { payload }) => {
+  on(SensorActions.DeleteSensorAction, (state: SensorState, sensor: Sensor) => {
+    return { ...state, Sensors: [...state.Sensors, sensor], SensorError: null };
+  }),
+  on(SensorActions.SuccessGetSensorsAction, (state: SensorState, { payload }) => {
     return { ...state, Sensors: payload };
   }),
   on(SensorActions.SuccessCreateSensorAction, (state: SensorState, { payload }) => {
     return { ...state, Sensors: [...state.Sensors, payload], SensorError: null };
+  }),
+  on(SensorActions.SuccessDeleteSensorAction, (state: SensorState, { payload }) => {
+    const sensors = state.Sensors.filter(s => s.id !== payload);
+    return { ...state, Sensors: [...sensors], SensorError: null };
   }),
   on(SensorActions.SuccessUpdateSensorAction, (state: SensorState, { payload }) => {
     return { ...state, Sensors: [...state.Sensors, payload], SensorError: null };

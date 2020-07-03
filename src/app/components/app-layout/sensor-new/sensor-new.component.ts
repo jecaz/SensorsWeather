@@ -52,18 +52,15 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       {label: 'High Humidity', value: 'images/ico_alarm.svg'},
     ];
     this.sub = this.actions$.pipe(
-      ofType(SensorActions.ErrorSensorAction)
-    ).subscribe((error: any) =>
-      this.notificationService.openSnackBar(`Error Code: ${error.status}\nMessage: ${error.message}`, '', 'error'));
-    this.sub = this.actions$.pipe(
       ofType(SensorActions.SuccessCreateSensorAction, SensorActions.SuccessUpdateSensorAction)
     ).subscribe(action => {
       if (action.type === '[Sensor] - Success Update Sensor') {
-        this.notificationService.openSnackBar(this.displaySuccessMessage('updated'), '', 'success');
+        this.sensorsService.setSelectedSensor('');
+        this.displayNotification(this.displaySuccessMessage('updated'), 'Close', 'success');
         this.router.navigate(['../sensors'], { relativeTo: this.activeRoute.parent });
         return;
       }
-      this.notificationService.openSnackBar(this.displaySuccessMessage('created'), '', 'success');
+      this.displayNotification(this.displaySuccessMessage('created'), 'Close', 'success');
       this.router.navigate(['../sensors'], { relativeTo: this.activeRoute });
     });
   }
@@ -138,6 +135,10 @@ export class SensorNewComponent implements OnInit, OnDestroy {
   }
 
   displaySuccessMessage(partOfMessage: string) {
-    return`Sensor successfully ${partOfMessage}!`;
+    return `Sensor successfully ${partOfMessage}!`;
+  }
+
+  displayNotification(message: string, action: string, className: string) {
+    this.notificationService.openSnackBar(message, action, className);
   }
 }

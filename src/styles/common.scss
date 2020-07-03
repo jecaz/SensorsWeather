@@ -15,7 +15,8 @@
   @include message-state($color, $bgCol, $borderCol);
   padding: $padding !important;
   border-radius: 4px !important;
-  width:  $width !important;
+  min-width:  $width !important;
+  max-width:  $width !important;
 }
 
 .mat-form-field.ng-dirty.ng-invalid .mat-form-field-underline {
@@ -82,12 +83,17 @@
   width: 40%;
 }
 
+.mat-snack-bar-container {
+  display: flex !important;
+  justify-content: space-around !important;
+}
+
 .error {
   @include message-display(10px, $error-message-col, $error-message-bgCol, $error-message-borderCol, 400px);
 }
 
 .success {
-  @include message-display(10px, $success-col, $success-bgCol, $success-borderCol, 200px);
+  @include message-display(10px, $success-col, $success-bgCol, $success-borderCol, 300px);
 }
 
 .warn {

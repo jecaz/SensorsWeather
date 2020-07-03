@@ -15,9 +15,9 @@
       "name": "Humidity",
       "image": "images/ico_humidity.svg",
       "path": "DemoDevice/Humidity",
-      "unitSymbol": "%",
+      "unitSymbol": "%#",
       "value": "43.23",
-      "lastUpdate": 1507211004000,
+      "lastUpdate": 1593783794521,
       "type": "FEED"
     },
     {
@@ -25,9 +25,9 @@
       "name": "Pressure",
       "image": "images/ico_pressure.svg",
       "path": "DemoDevice/Pressure",
-      "unitSymbol": "mb",
+      "unitSymbol": "mb@",
       "value": "1003.4",
-      "lastUpdate": "2020-06-29T22:00:00.000Z",
+      "lastUpdate": 1593727205134,
       "type": "FEED"
     },
     {
@@ -119,6 +119,16 @@
       "value": "qq",
       "lastUpdate": 1593724195974,
       "type": "FEED"
+    },
+    {
+      "name": "sdf",
+      "image": "images/ico_humidity.svg",
+      "path": "sssssssss",
+      "unitSymbol": "sssss",
+      "value": "ssssss",
+      "lastUpdate": 1593691281525,
+      "type": "ACTUATOR",
+      "id": 13
     }
   ]
 }
