@@ -1,11 +1,11 @@
 <div style="height: 100vh;" class="sensors">
   <mat-toolbar class="sensors-toolbar"  color="primary">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
-      <a mat-button (click)="resetSelectedSensorId()" routerLink="/sensors">Sensors</a>
+      <a mat-button (click)="setSelectedSensorId('', true)" routerLink="/sensors">Sensors</a>
       <div fxShow="true" fxHide.lt-md="true">
         <button mat-button routerLink="/sensor"
                 routerLinkActive="active-button"
-                (click)="resetSelectedSensorId()"
+                (click)="setSelectedSensorId('', true)"
                 [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>add</mat-icon>
           Create

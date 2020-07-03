@@ -121,14 +121,14 @@
       "type": "FEED"
     },
     {
-      "name": "sdf",
-      "image": "images/ico_humidity.svg",
-      "path": "sssssssss",
-      "unitSymbol": "sssss",
-      "value": "ssssss",
-      "lastUpdate": 1593691281525,
-      "type": "ACTUATOR",
-      "id": 13
+      "name": "alarm",
+      "image": "images/ico_string.svg",
+      "path": "ee",
+      "unitSymbol": "@",
+      "value": "ee",
+      "lastUpdate": 1593795286065,
+      "type": "ALARM",
+      "id": 14
     }
   ]
 }

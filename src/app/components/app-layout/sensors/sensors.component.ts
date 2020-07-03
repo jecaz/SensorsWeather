@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/index';
-import {SensorsService} from '../../../services/sensors.service';
 import {Sensor} from '../../../models/sensor.model';
 import SensorState from '../../../store/states/sensor.state';
 import { select, Store } from '@ngrx/store';
@@ -11,7 +10,7 @@ import * as fromSensors from '../../../store/selectors/sensors.selectors';
 @Component({
   selector: 'app-sensors',
   templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss']
+  styleUrls: ['./sensors.component.scss'],
 })
 export class SensorsComponent implements OnInit, OnDestroy {
 
@@ -20,11 +19,9 @@ export class SensorsComponent implements OnInit, OnDestroy {
   searchByType: string;
   subscriptions: Subscription[] = [];
   typeDropdown: string[];
-  selectedSensorId: Sensor;
   sensors$: Observable<SensorState>;
 
-  constructor(private sensorsService: SensorsService,
-              private store: Store<{sensors: SensorState}>) {
+  constructor(private store: Store<{sensors: SensorState}>) {
     this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
   }
 
@@ -62,19 +59,6 @@ export class SensorsComponent implements OnInit, OnDestroy {
       return;
     }
     this.searchByType = event.value;
-  }
-
-  selectSensor(sensorId) {
-    if (this.selectedSensorId === sensorId) {
-      this.setSelectSensorId('');
-      return;
-    }
-    this.setSelectSensorId(sensorId);
-  }
-
-  setSelectSensorId(sensorId) {
-    this.selectedSensorId = sensorId;
-    this.sensorsService.setSelectedSensor(sensorId);
   }
 
   setTypeDropdown(sensors: Sensor[]) {

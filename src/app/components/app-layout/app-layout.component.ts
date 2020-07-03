@@ -49,7 +49,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.sub = this.actions$.pipe(
       ofType(SensorActions.SuccessDeleteSensorAction)
     ).subscribe((deletedSensor: any) => {
-        this.notificationService.openSnackBar('Sensor successfully deleted!', '', 'success');
+        this.notificationService.openSnackBar('Sensor successfully deleted!', 'Close', 'success');
     });
   }
 
