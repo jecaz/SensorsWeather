@@ -1,10 +1,14 @@
 
 import {Sensor} from '../../models/sensor.model';
 import { createAction, props } from '@ngrx/store';
+import {Pageable} from '../../models/pageable.model';
 
 export const GetSensorsAction = createAction('[Sensor] - Get Sensors');
 
-export const BeginGetSensorsAction = createAction('[Sensor] - Begin Get Sensors');
+export const BeginGetSensorsAction = createAction(
+  '[Sensor] - Begin Get Sensors',
+  props<{ payload: Pageable }>()
+);
 
 export const SuccessGetSensorsAction = createAction(
   '[Sensor] - Success Get Sensors',

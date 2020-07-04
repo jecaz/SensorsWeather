@@ -1,9 +1,13 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Sensor} from '../../../models/sensor.model';
 import {MatSort, MatTableDataSource, Sort} from '@angular/material';
-import {SensorsService} from '../../../services/sensors.service';
 import {Pageable} from '../../../models/pageable.model';
-import {Subscription} from 'rxjs/index';
+import {Observable, Subscription} from 'rxjs/index';
+import * as SensorActions from '../../../store/actions/sensor.action';
+import * as fromSensors from '../../../store/selectors/sensors.selectors';
+import SensorState from '../../../store/states/sensor.state';
+import {select, Store} from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sensor-grid',
@@ -20,8 +24,11 @@ export class SensorGridComponent implements OnInit, OnDestroy {
   defaultPageSize: number;
   filterValue: string;
   subscriptions: Subscription[] = [];
+  sensors$: Observable<SensorState>;
 
-  constructor(private sensorService: SensorsService) { }
+  constructor(private store: Store<{sensors: SensorState}>) {
+    this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
+  }
 
   ngOnInit() {
     this.defaultPageIndex = 1;
@@ -29,8 +36,15 @@ export class SensorGridComponent implements OnInit, OnDestroy {
     this.tableColumns = ['name', 'image', 'path', 'unitSymbol', 'value', 'lastUpdate', 'type'];
     this.dataSource = new MatTableDataSource<Sensor>();
     this.setSort();
+    this.sub = this.sensors$
+      .pipe(
+        map(x => {
+          this.dataSource.data = x.Sensors;
+          this.totalRecords = x.Sensors[0].totalSensorCount;
+        })
+      ).subscribe();
     const pagination = this.getPagination(this.defaultPageIndex, this.defaultPageSize);
-    this.getSensors(pagination);
+    this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
   ngOnDestroy() {
@@ -51,18 +65,11 @@ export class SensorGridComponent implements OnInit, OnDestroy {
 
   onPage(event) {
     const pagination = this.getPagination(++event.pageIndex, event.pageSize);
-    this.getSensors(pagination);
+    this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
   getPagination(pateIndex: number, pageSize: number) {
     return new Pageable(pateIndex, pageSize);
-  }
-
-  getSensors(pageable: Pageable) {
-    this.sub = this.sensorService.getSensors(pageable).subscribe(data => {
-      this.dataSource.data = data;
-      this.totalRecords = data[0].totalSensorCount;
-    });
   }
 
   filterData(filterValue: string) {

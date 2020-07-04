@@ -37,7 +37,7 @@ export class SensorsComponent implements OnInit, OnDestroy {
           this.setTypeDropdown(this.sensors);
         })
       ).subscribe();
-    this.store.dispatch(SensorActions.BeginGetSensorsAction());
+    this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
     this.sensorService.getIsSliderChecked().subscribe(isChecked => this.isSliderChecked = isChecked);
   }
 

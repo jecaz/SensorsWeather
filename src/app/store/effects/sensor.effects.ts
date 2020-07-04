@@ -16,7 +16,7 @@ export class SensorEffects {
       this.action$.pipe(
       ofType(SensorActions.BeginGetSensorsAction),
       mergeMap(action =>
-        this.sensorsService.getSensors().pipe(
+        this.sensorsService.getSensors(action.payload).pipe(
           map((sensors: Sensor[]) => {
             return SensorActions.SuccessGetSensorsAction({ payload: sensors });
           }),
