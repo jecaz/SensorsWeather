@@ -9,6 +9,7 @@ import {Actions, ofType} from '@ngrx/effects';
 import SensorState from '../../store/states/sensor.state';
 import {Store} from '@ngrx/store';
 import * as SensorActions from '../../store/actions/sensor.action';
+import {Pageable} from '../../models/pageable.model';
 
 @Component({
   selector: 'app-app-layout',
@@ -52,7 +53,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.sub = this.actions$.pipe(
       ofType(SensorActions.SuccessDeleteSensorAction)
     ).subscribe((deletedSensor: any) => {
-        this.notificationService.openSnackBar('Sensor successfully deleted!', 'Close', 'success');
+      this.notificationService.openSnackBar('Sensor successfully deleted!', 'Close', 'success');
     });
   }
 
@@ -110,7 +111,13 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   }
 
   onToggleSlider(event: MatSlideToggleChange) {
-    event.checked ? this.buttonsVisibility('hidden') : this.buttonsVisibility('visible');
+    if (event.checked) {
+      this.buttonsVisibility('hidden');
+      this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5) }));
+    } else {
+      this.buttonsVisibility('visible');
+      this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
+    }
     this.sensorService.setIsSliderChecked(event.checked);
   }
 

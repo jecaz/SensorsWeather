@@ -11,7 +11,7 @@ import {SensorsService} from '../../../services/sensors.service';
 @Component({
   selector: 'app-sensors',
   templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss'],
+  styleUrls: ['./sensors.component.scss']
 })
 export class SensorsComponent implements OnInit, OnDestroy {
 

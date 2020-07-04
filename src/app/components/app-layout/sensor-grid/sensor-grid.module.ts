@@ -7,7 +7,7 @@ import {
   MatPaginatorModule,
   MatSelectModule,
   MatSortModule,
-  MatTableModule,
+  MatTableModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -31,7 +31,7 @@ import {SensorGridComponent} from './sensor-grid.component';
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
+    MatSortModule
   ],
   exports: [SensorGridComponent]
 })

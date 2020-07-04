@@ -41,7 +41,6 @@ export class SensorsService {
     if (pagination) {
       params = new HttpParams().set('_page', pagination.pageIndex).set('_limit', pagination.pageSize);
     }
-    console.log(pagination, 'pagination')
     return this.http.get<Sensor[]>(this.API_URL + '/sensors', { params, observe: 'response' })
       .pipe(
         map(response => response.body.map(item => new Sensor(item, response)))

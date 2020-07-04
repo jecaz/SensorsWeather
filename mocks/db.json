@@ -47,8 +47,9 @@
       "path": "DemoDevice/Count",
       "unitSymbol": "count",
       "value": "+76",
-      "lastUpdate": 1505819296000,
-      "type": "ACTUATOR"
+      "lastUpdate": 1593882506952,
+      "type": "ACTUATOR",
+      "totalSensorCount": null
     },
     {
       "id": 6,
@@ -72,63 +73,14 @@
     },
     {
       "id": 8,
-      "name": "Feed",
-      "image": "images/ico_humidity.svg",
-      "path": "df",
-      "unitSymbol": "sdf",
-      "value": "df",
-      "lastUpdate": 1593450279898,
-      "type": "FEED"
-    },
-    {
-      "id": 9,
-      "name": "actuator",
-      "image": "images/ico_slider.svg",
-      "path": "ttt",
-      "unitSymbol": "rrr",
-      "value": "eee",
-      "lastUpdate": 1593428425300,
-      "type": "ACTUATOR"
-    },
-    {
-      "name": "test",
+      "name": "www",
       "image": "images/ico_pressure.svg",
-      "path": "eee",
-      "unitSymbol": "ttt",
-      "value": "aaa",
-      "lastUpdate": 1593588206189,
-      "type": "FEED",
-      "id": 10
-    },
-    {
-      "name": "hello",
-      "image": "images/ico_switcher.svg",
-      "path": "qqqw",
-      "unitSymbol": "%",
-      "value": "ww",
-      "lastUpdate": 1593638797252,
+      "path": "aawww",
+      "unitSymbol": "wwww",
+      "value": "www",
+      "lastUpdate": 1593889401330,
       "type": "ALARM",
-      "id": 11
-    },
-    {
-      "id": 12,
-      "name": "qqq",
-      "image": "images/ico_humidity.svg",
-      "path": "aaaa",
-      "unitSymbol": "qq",
-      "value": "qq",
-      "lastUpdate": 1593724195974,
-      "type": "FEED"
-    },
-    {
-      "name": "alarm",
-      "image": "images/ico_string.svg",
-      "path": "ee",
-      "unitSymbol": "@",
-      "value": "ee",
-      "lastUpdate": 1593795286065,
-      "type": "ALARM",
-      "id": 14
+      "totalSensorCount": null
     }
   ]
 }
