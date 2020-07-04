@@ -1,0 +1,30 @@
+@import "../../../../styles/variables";
+
+.sensor-table {
+  width: 97%;
+  margin: 2rem;
+
+  &-filter {
+    width: inherit;
+    margin: 2rem;
+
+    &-form {
+      width: 40%;
+
+      &--icon {
+        zoom: .7;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &-content {
+    width: 100%;
+
+    &--image {
+      width: 5rem;
+      height: 4rem;
+      filter: $filterCol;
+    }
+  }
+}

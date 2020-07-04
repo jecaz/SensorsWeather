@@ -4,10 +4,12 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatPaginatorModule,
   MatSelectModule,
+  MatSortModule,
   MatTableModule,
 } from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {SensorGridComponent} from './sensor-grid.component';
@@ -18,7 +20,7 @@ import {SensorGridComponent} from './sensor-grid.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -27,7 +29,9 @@ import {SensorGridComponent} from './sensor-grid.component';
     MatIconModule,
     MatTableModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [SensorGridComponent]
 })

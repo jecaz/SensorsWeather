@@ -1,9 +1,10 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Sensor} from '../models/sensor.model';
 import { map, catchError } from 'rxjs/operators';
 import {BehaviorSubject, Observable, Subject, throwError} from 'rxjs';
+import {Pageable} from '../models/pageable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +36,14 @@ export class SensorsService {
     this.isSliderChecked.next(isChecked);
   }
 
-  getSensors(): Observable<Sensor[]> {
-    return this.http.get<Sensor[]>(this.API_URL + '/sensors')
+  getSensors(pagination?: Pageable): Observable<Sensor[]> {
+    let params = {};
+    if (pagination) {
+      params = new HttpParams().set('_page', pagination.pageIndex).set('_limit', pagination.pageSize);
+    }
+    return this.http.get<Sensor[]>(this.API_URL + '/sensors', { params, observe: 'response' })
       .pipe(
-        map(response => response.map(item => new Sensor(item)))
+        map(response => response.body.map(item => new Sensor(item, response)))
       );
   }
 
