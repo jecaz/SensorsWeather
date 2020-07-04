@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {SensorsService} from '../../services/sensors.service';
-import {MatDialog, MatSidenav} from '@angular/material';
+import {MatButton, MatDialog, MatSidenav, MatSlideToggle, MatSlideToggleChange} from '@angular/material';
 import {DialogComponent} from '../../common/dialog/dialog.component';
 import {Subscription} from 'rxjs/index';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -17,8 +17,10 @@ import * as SensorActions from '../../store/actions/sensor.action';
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
 
-  @ViewChild('editBtn', { static: true }) editButton: any;
-  @ViewChild('deleteBtn', { static: true }) deleteButton: any;
+  @ViewChild('editBtn', { static: true }) editButton: MatButton;
+  @ViewChild('deleteBtn', { static: true }) deleteButton: MatButton;
+  @ViewChild('createBtn', { static: true }) createBtn: MatButton;
+  @ViewChild('toggleSlider', { static: true }) toggleSlider: MatSlideToggle;
   selectedSensorId: any;
   subscriptions: Subscription[] = [];
 
@@ -29,7 +31,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
               private router: Router,
               private notificationService: NotificationService,
               private store: Store<{sensors: SensorState}>,
-              private actions$: Actions) { }
+              private actions$: Actions,
+              private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.isDisabledButtons(true);
@@ -67,8 +70,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   }
 
   isDisabledButtons(isDisabled: boolean) {
-    this.editButton._disabled = isDisabled;
-    this.deleteButton._disabled = isDisabled;
+    this.editButton.disabled = isDisabled;
+    this.deleteButton.disabled = isDisabled;
   }
 
   openDialog(): void {
@@ -104,5 +107,16 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   displayMessage() {
     this.notificationService.openSnackBar('First select sensor!', 'Close', 'warn');
+  }
+
+  onToggleSlider(event: MatSlideToggleChange) {
+    event.checked ? this.buttonsVisibility('hidden') : this.buttonsVisibility('visible');
+    this.sensorService.setIsSliderChecked(event.checked);
+  }
+
+  buttonsVisibility(visible: string) {
+    this.renderer.setStyle(this.editButton._elementRef.nativeElement, 'visibility', visible);
+    this.renderer.setStyle(this.deleteButton._elementRef.nativeElement, 'visibility', visible);
+    this.renderer.setStyle(this.createBtn._elementRef.nativeElement, 'visibility', visible);
   }
 }

@@ -13,12 +13,15 @@ import {RouterModule} from '@angular/router';
 import {SensorNewModule} from './sensor-new/sensor-new.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {DialogModule} from '../../common/dialog/dialog.module';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
     AppLayoutComponent
   ],
   imports: [
+    CommonModule,
     RouterModule,
     MatToolbarModule,
     SensorsModule,
@@ -29,7 +32,8 @@ import {DialogModule} from '../../common/dialog/dialog.module';
     DialogModule,
     MatTooltipModule,
     MatListModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSlideToggleModule
   ],
   exports: [AppLayoutComponent]
 })

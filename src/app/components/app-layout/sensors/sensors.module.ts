@@ -7,6 +7,7 @@ import {PipesModule} from '../../../pipes/pipe.module';
 import {MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {SensorCardModule} from '../sensor-card/sensor-card.module';
+import {SensorGridModule} from '../sensor-grid/sensor-grid.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {SensorCardModule} from '../sensor-card/sensor-card.module';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    SensorCardModule
+    SensorCardModule,
+    SensorGridModule
   ],
   exports: [SensorsComponent]
 })

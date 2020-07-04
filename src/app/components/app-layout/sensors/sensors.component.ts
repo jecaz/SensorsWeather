@@ -6,6 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import * as SensorActions from '../../../store/actions/sensor.action';
 import * as fromSensors from '../../../store/selectors/sensors.selectors';
+import {SensorsService} from '../../../services/sensors.service';
 
 @Component({
   selector: 'app-sensors',
@@ -20,12 +21,14 @@ export class SensorsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   typeDropdown: string[];
   sensors$: Observable<SensorState>;
+  isSliderChecked: boolean;
 
-  constructor(private store: Store<{sensors: SensorState}>) {
+  constructor(private store: Store<{sensors: SensorState}>, private sensorService: SensorsService) {
     this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
   }
 
   ngOnInit(): void {
+    this.isSliderChecked = false;
     this.typeDropdown = [];
     this.sub = this.sensors$
       .pipe(
@@ -35,6 +38,7 @@ export class SensorsComponent implements OnInit, OnDestroy {
         })
       ).subscribe();
     this.store.dispatch(SensorActions.BeginGetSensorsAction());
+    this.sensorService.getIsSliderChecked().subscribe(isChecked => this.isSliderChecked = isChecked);
   }
 
   ngOnDestroy() {

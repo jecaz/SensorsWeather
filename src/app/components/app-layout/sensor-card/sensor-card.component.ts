@@ -6,7 +6,7 @@ import {SensorsService} from '../../../services/sensors.service';
   selector: 'app-sensor-card',
   templateUrl: './sensor-card.component.html',
   styleUrls: ['./sensor-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SensorCardComponent {
 

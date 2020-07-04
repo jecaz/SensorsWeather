@@ -1,0 +1,61 @@
+<h1>Grid View</h1>
+<mat-card>
+  <mat-card-content>
+    <div gdAreas="table" gdColumns="100%!">
+      <table mat-table [dataSource]="dataSource" style="width: 100%;" gdArea="table">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef>Image</th>
+          <td mat-cell *matCellDef="let element"> {{element.image}} </td>
+        </ng-container>
+        <ng-container matColumnDef="path">
+          <th mat-header-cell *matHeaderCellDef>Path</th>
+          <td mat-cell *matCellDef="let element"> {{element.path}} </td>
+        </ng-container>
+        <ng-container matColumnDef="unitSymbol">
+          <th mat-header-cell *matHeaderCellDef>Unit symbol</th>
+          <td mat-cell *matCellDef="let element"> {{element.unitSymbol}} </td>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>Value</th>
+          <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+        </ng-container>
+        <ng-container matColumnDef="lastUpdate">
+          <th mat-header-cell *matHeaderCellDef >Last update </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastUpdate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card-demo">
+  <mat-card-title>Basic Responsive Grid App</mat-card-title>
+  <mat-card-content class="containerX">
+    <div class="colorNested box" style="height: auto;">
+      <div gdAreas.xs="header | sidebar | content | sidebar2 | footer" gdGap="1em"
+           gdColumns.xs="none"
+           gdAreas.sm="header header | sidebar content | sidebar2 sidebar2 | footer footer"
+           gdColumns.sm="20%!"
+           gdAreas.gt-sm="header header header | sidebar content sidebar2 | footer footer footer"
+           gdColumns.gt-sm="120px auto 120px" gdGap.gt-sm="20px" [ngStyle]="{'max-width': 'auto'}"
+           [ngStyle.gt-sm]="{'max-width': '600px'}">
+        <div class="blocks one" gdArea="header">Header</div>
+        <div class="blocks two" gdArea="sidebar">Sidebar</div>
+        <div class="blocks three" gdArea="sidebar2">Sidebar 2</div>
+        <div class="blocks four" gdArea="content">Content
+          <br /> More content than we had before so this column is now quite tall.</div>
+        <div class="blocks five" gdArea="footer">Footer</div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
