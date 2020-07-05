@@ -15,9 +15,9 @@
       "name": "Humidity",
       "image": "images/ico_humidity.svg",
       "path": "DemoDevice/Humidity",
-      "unitSymbol": "%#",
+      "unitSymbol": "%",
       "value": "43.23",
-      "lastUpdate": 1593783794521,
+      "lastUpdate": 1507211004000,
       "type": "FEED"
     },
     {
@@ -25,9 +25,9 @@
       "name": "Pressure",
       "image": "images/ico_pressure.svg",
       "path": "DemoDevice/Pressure",
-      "unitSymbol": "mb@",
+      "unitSymbol": "mb",
       "value": "1003.4",
-      "lastUpdate": 1593727205134,
+      "lastUpdate": 1507211004000,
       "type": "FEED"
     },
     {
@@ -47,9 +47,8 @@
       "path": "DemoDevice/Count",
       "unitSymbol": "count",
       "value": "+76",
-      "lastUpdate": 1593882506952,
-      "type": "ACTUATOR",
-      "totalSensorCount": null
+      "lastUpdate": 1505819296000,
+      "type": "ACTUATOR"
     },
     {
       "id": 6,
@@ -70,17 +69,6 @@
       "value": true,
       "lastUpdate": 1507211004000,
       "type": "ALARM"
-    },
-    {
-      "id": 8,
-      "name": "www",
-      "image": "images/ico_pressure.svg",
-      "path": "aawww",
-      "unitSymbol": "wwww",
-      "value": "www",
-      "lastUpdate": 1593889401330,
-      "type": "ALARM",
-      "totalSensorCount": null
     }
   ]
 }

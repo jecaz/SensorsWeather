@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { merge, Observable, of} from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as SensorActions from '../actions/sensor.action';
 import {Sensor} from '../../models/sensor.model';
@@ -63,16 +63,32 @@ export class SensorEffects {
   DeleteSensor$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
       ofType(SensorActions.BeginDeleteSensorAction),
-      mergeMap(action =>
-        this.sensorsService.deleteSensorById(action.payload).pipe(
-          map((data: Sensor) => {
-            return SensorActions.SuccessDeleteSensorAction({ payload: action.payload });
-          }),
-          catchError((error: any) => {
-            return of(SensorActions.ErrorSensorAction(error));
-          })
-        )
-      )
+      mergeMap((action: any) => {
+        // delete all
+        if (typeof action.payload !== 'number') {
+          const ids = [];
+          action.payload.forEach(i => ids.push(this.sensorsService.deleteSensorById(i)));
+          const observables: Observable<any>[] = ids;
+          return merge(...observables).pipe(
+            map(results => {
+              return SensorActions.SuccessDeleteSensorAction({ payload: action.payload });
+            }),
+            catchError((error: any) => {
+              return of(SensorActions.ErrorSensorAction(error));
+            })
+          );
+        } else {
+          // delete one
+          return merge(this.sensorsService.deleteSensorById(action.payload)).pipe(
+            map(results => {
+              return SensorActions.SuccessDeleteSensorAction({ payload: action.payload });
+            }),
+            catchError((error: any) => {
+              return of(SensorActions.ErrorSensorAction(error));
+            })
+          );
+        }
+      })
     )
   );
 }

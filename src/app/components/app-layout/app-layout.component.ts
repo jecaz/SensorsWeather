@@ -113,7 +113,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   onToggleSlider(event: MatSlideToggleChange) {
     if (event.checked) {
       this.buttonsVisibility('hidden');
-      this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5) }));
+      this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5, 'name', 'asc') }));
     } else {
       this.buttonsVisibility('visible');
       this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));

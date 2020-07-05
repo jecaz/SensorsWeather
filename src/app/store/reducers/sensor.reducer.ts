@@ -26,7 +26,12 @@ const reducer = createReducer(
     return { ...state, Sensors: [...state.Sensors, payload], SensorError: null };
   }),
   on(SensorActions.SuccessDeleteSensorAction, (state: SensorState, { payload }) => {
-    const sensors = state.Sensors.filter(s => s.id !== payload);
+    let sensors = null;
+    if (typeof payload === 'number') {
+      sensors = state.Sensors.filter(s => s.id !== payload);
+    } else {
+      sensors = state.Sensors.filter(s => !payload.includes(s.id));
+    }
     return { ...state, Sensors: [...sensors], SensorError: null };
   }),
   on(SensorActions.SuccessUpdateSensorAction, (state: SensorState, { payload }) => {

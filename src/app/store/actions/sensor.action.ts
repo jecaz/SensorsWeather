@@ -52,12 +52,12 @@ export const DeleteSensorAction = createAction(
 
 export const BeginDeleteSensorAction = createAction(
   '[Sensor] - Begin Delete Sensor',
-  props<{ payload: number }>()
+  props<{ payload: number | number[] }>()
 );
 
 export const SuccessDeleteSensorAction = createAction(
   '[Sensor] - Success Delete Sensor',
-  props<{ payload: number }>()
+  props<{ payload: number | number[]}>()
 );
 
 export const ErrorSensorAction = createAction('[Sensor] - Error', props<Error>());

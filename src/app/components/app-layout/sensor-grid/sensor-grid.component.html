@@ -1,6 +1,6 @@
 <h1>Grid View</h1>
 <div class="sensor-table mat-elevation-z8">
-  <div class="sensor-table-filter">
+  <div class="sensor-table-filter" fxLayout="row" fxLayoutAlign="flex-start center">
     <mat-form-field class="sensor-table-filter-form">
       <input [(ngModel)]="filterValue" matInput (keyup)="filterData(filterValue)" placeholder="Filter data">
       <mat-icon *ngIf="filterValue"
@@ -8,9 +8,33 @@
                 class="sensor-table-filter-form--icon"
                 (click)="dataSource.filter = ''; filterValue = '';">clear</mat-icon>
     </mat-form-field>
+    <div fxLayoutAlign="center center">
+      <button mat-button color="primary" (click)="goToPage()">
+        <mat-icon>add</mat-icon>Create
+      </button>
+      <button mat-button color="primary" (click)="deleteAllSelected()">
+        <mat-icon>delete</mat-icon>Delete selected
+      </button>
+    </div>
   </div>
   <div gdAreas="table" gdColumns="100%!">
-    <table class="sensor-table-content" mat-table matSort matSortDisableClear [dataSource]="dataSource" gdArea="table">
+    <table class="sensor-table-content" mat-table matSort (matSortChange)="sortData($event)" matSortDisableClear [dataSource]="dataSource" gdArea="table">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -44,7 +68,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" (click)="goToEditPage(element.id)">
+          <button mat-button color="primary" (click)="goToPage(element.id)">
             <mat-icon>create</mat-icon>Edit
           </button>
           <button mat-button color="primary" (click)="openDialog(element.id)">

@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "mock:server": "json-server --watch mocks/db.json"
+    "mock:server": "json-server --port 3001 --watch mocks/db.json"
   },
   "private": true,
   "dependencies": {
@@ -39,7 +39,6 @@
     "@angular/language-service": "~8.2.9",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",

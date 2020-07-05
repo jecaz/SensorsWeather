@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {
-  MatButtonModule, MatCardModule,
+  MatButtonModule,
+  MatCheckboxModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -28,10 +29,10 @@ import {SensorGridComponent} from './sensor-grid.component';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule
   ],
   exports: [SensorGridComponent]
 })

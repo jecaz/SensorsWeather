@@ -39,7 +39,10 @@ export class SensorsService {
   getSensors(pagination?: Pageable): Observable<Sensor[]> {
     let params = {};
     if (pagination) {
-      params = new HttpParams().set('_page', pagination.pageIndex).set('_limit', pagination.pageSize);
+      params = new HttpParams().set('_page', pagination.pageIndex)
+                                .set('_limit', pagination.pageSize)
+                                .set('_sort', pagination.sort)
+                                .set('_order', pagination.order);
     }
     return this.http.get<Sensor[]>(this.API_URL + '/sensors', { params, observe: 'response' })
       .pipe(
