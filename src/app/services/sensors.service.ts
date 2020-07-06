@@ -13,11 +13,11 @@ export class SensorsService {
 
   API_URL: string = environment.urlSensors;
   selectedSensorId: BehaviorSubject<any>;
-  isSliderChecked: Subject<boolean>;
+  isSliderChecked: BehaviorSubject<boolean>;
 
   constructor(private http: HttpClient) {
     this.selectedSensorId = new BehaviorSubject('');
-    this.isSliderChecked = new Subject();
+    this.isSliderChecked = new BehaviorSubject(false);
   }
 
   getSelectedSensor() {

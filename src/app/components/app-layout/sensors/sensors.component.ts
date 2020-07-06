@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import * as SensorActions from '../../../store/actions/sensor.action';
 import * as fromSensors from '../../../store/selectors/sensors.selectors';
 import {SensorsService} from '../../../services/sensors.service';
+import {Pageable} from '../../../models/pageable.model';
 
 @Component({
   selector: 'app-sensors',
@@ -37,12 +38,19 @@ export class SensorsComponent implements OnInit, OnDestroy {
           this.setTypeDropdown(this.sensors);
         })
       ).subscribe();
-    this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
-    this.sensorService.getIsSliderChecked().subscribe(isChecked => this.isSliderChecked = isChecked);
+    this.sub = this.sensorService.getIsSliderChecked().subscribe(isChecked => {
+      this.isSliderChecked = isChecked;
+      if (this.isSliderChecked) {
+        this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5, 'name', 'asc') }));
+      } else {
+        this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
+      }
+    });
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
+    this.sensors = null;
   }
 
   private set sub(sub: Subscription) {

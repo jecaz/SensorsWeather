@@ -1,6 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges,
-  ViewChild
+  ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild
 } from '@angular/core';
 import {Sensor} from '../../../models/sensor.model';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort} from '@angular/material';
@@ -14,6 +13,7 @@ import {DialogComponent} from '../../../common/dialog/dialog.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
 import {Actions, ofType} from '@ngrx/effects';
+import {SensorsService} from '../../../services/sensors.service';
 
 @Component({
   selector: 'app-sensor-grid',
@@ -39,13 +39,12 @@ export class SensorGridComponent implements OnInit, OnChanges, OnDestroy {
   subscriptions: Subscription[] = [];
   idsForDelete: any[];
 
-
   constructor(private store: Store<{sensors: SensorState}>,
               public dialog: MatDialog,
               private activeRoute: ActivatedRoute,
               private router: Router,
               private actions$: Actions,
-              private cdref: ChangeDetectorRef) {
+              private sensorService: SensorsService) {
     this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
   }
 
@@ -123,6 +122,7 @@ export class SensorGridComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.router.navigate(['../sensor'], { relativeTo: this.activeRoute });
+    this.sensorService.setIsSliderChecked(true);
   }
 
   isAllSelected() {

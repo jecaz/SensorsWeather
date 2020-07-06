@@ -10,6 +10,7 @@ import SensorState from '../../../store/states/sensor.state';
 import {Store} from '@ngrx/store';
 import * as SensorActions from '../../../store/actions/sensor.action';
 import {Actions, ofType} from '@ngrx/effects';
+import {Pageable} from "../../../models/pageable.model";
 
 @Component({
   selector: 'app-sensor-new',
@@ -23,6 +24,7 @@ export class SensorNewComponent implements OnInit, OnDestroy {
   imagesDropdown: any[];
   subscriptions: Subscription[] = [];
   id: any;
+  isChecked: boolean;
 
   constructor(private sensorsService: SensorsService,
               private notificationService: NotificationService,
@@ -33,7 +35,8 @@ export class SensorNewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.activeRoute.params.subscribe(p => {
+    this.sub = this.sensorsService.getIsSliderChecked().subscribe(isChecked => this.isChecked = isChecked);
+    this.sub = this.activeRoute.params.subscribe(p => {
       this.initForm();
       if (p.id) {
         this.id = p.id;
@@ -114,6 +117,9 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       this.store.dispatch(SensorActions.BeginUpdateSensorAction({ payload: sensor }));
     } else {
       this.store.dispatch(SensorActions.BeginCreateSensorAction({ payload: sensor }));
+    }
+    if (this.isChecked) {
+      this.sensorsService.setIsSliderChecked(this.isChecked);
     }
   }
 

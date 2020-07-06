@@ -9,7 +9,6 @@ import {Actions, ofType} from '@ngrx/effects';
 import SensorState from '../../store/states/sensor.state';
 import {Store} from '@ngrx/store';
 import * as SensorActions from '../../store/actions/sensor.action';
-import {Pageable} from '../../models/pageable.model';
 
 @Component({
   selector: 'app-app-layout',
@@ -111,13 +110,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   }
 
   onToggleSlider(event: MatSlideToggleChange) {
-    if (event.checked) {
-      this.buttonsVisibility('hidden');
-      this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5, 'name', 'asc') }));
-    } else {
-      this.buttonsVisibility('visible');
-      this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
-    }
+    event.checked ? this.buttonsVisibility('hidden') : this.buttonsVisibility('visible');
     this.sensorService.setIsSliderChecked(event.checked);
   }
 
