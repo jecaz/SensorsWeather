@@ -76,6 +76,7 @@ export class SensorsService {
     return this.getSensors().pipe(
       take(1),
       switchMap(sensorsAll => {
+        // find all that remain after delete
         s = sensorsAll.filter(sensor1 => {
               return !sensors.some(sensor2 => {
                 return sensor1.id === sensor2.id;
