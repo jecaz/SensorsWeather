@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   environmentName: 'localhost',
-  urlSensors: 'http://localhost:3001',
+  urlSensors: 'http://localhost:3000',
 };
 
 /*

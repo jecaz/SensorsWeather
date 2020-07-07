@@ -144,7 +144,7 @@ export class SensorGridComponent implements OnInit, OnChanges, OnDestroy {
 
   deleteAllSelected() {
     this.idsForDelete = this.selection.selected.map(item => item.id);
-    this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: this.idsForDelete}));
+    this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: this.selection.selected}));
   }
 
   sortData(event) {

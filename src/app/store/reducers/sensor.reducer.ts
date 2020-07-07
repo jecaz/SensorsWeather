@@ -30,7 +30,11 @@ const reducer = createReducer(
     if (typeof payload === 'number') {
       sensors = state.Sensors.filter(s => s.id !== payload);
     } else {
-      sensors = state.Sensors.filter(s => !payload.includes(s.id));
+      sensors = state.Sensors.filter((s, index) => {
+        if (payload.length - 1 >= index) {
+          return payload[index].id !== s.id;
+        }
+      });
     }
     return { ...state, Sensors: [...sensors], SensorError: null };
   }),

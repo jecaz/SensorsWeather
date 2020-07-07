@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import {merge, Observable, of, timer} from 'rxjs';
+import {merge, Observable, of} from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as SensorActions from '../actions/sensor.action';
 import {Sensor} from '../../models/sensor.model';
 import {SensorsService} from '../../services/sensors.service';
-import {delay, ignoreElements, startWith, tap, timeInterval} from "rxjs/internal/operators";
 
 @Injectable()
 export class SensorEffects {
@@ -67,12 +66,7 @@ export class SensorEffects {
       mergeMap((action: any) => {
         // delete all
         if (typeof action.payload !== 'number') {
-          const ids = [];
-          action.payload.forEach(i => ids.push(this.sensorsService.deleteSensorById(i)));
-          const observables: Observable<any>[] = ids;
-          return merge(...observables).pipe(
-            delay(700),
-            tap(() => console.log('delay')),
+          return merge(this.sensorsService.deleteAll(action.payload)).pipe(
             map(results => {
               return SensorActions.SuccessDeleteSensorAction({ payload: action.payload });
             }),

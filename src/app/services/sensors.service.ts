@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Sensor} from '../models/sensor.model';
 import { map, catchError } from 'rxjs/operators';
-import {BehaviorSubject, Observable, Subject, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {Pageable} from '../models/pageable.model';
+import {switchMap, take} from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,21 @@ export class SensorsService {
 
   deleteSensorById(id: any) {
     return this.http.delete(`${this.API_URL}/sensors/${id}`);
+  }
+
+  deleteAll(sensors: Sensor[]) {
+    let s: Sensor[];
+    return this.getSensors().pipe(
+      take(1),
+      switchMap(sensorsAll => {
+        s = sensorsAll.filter(sensor1 => {
+              return !sensors.some(sensor2 => {
+                return sensor1.id === sensor2.id;
+              });
+            });
+        return this.http.post(this.API_URL + '/reset', {sensors: s}, { responseType: 'text' as 'json' });
+      })
+    );
   }
 
   handleError(error) {
