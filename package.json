@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "mock:server": "json-server --watch mocks/db.json --middlewares ./node_modules/json-server-reset",
-    "start:project": "start npm run mock:server && start npm start"
+    "start:project": "npm run mock:server && npm start"
   },
   "private": true,
   "dependencies": {

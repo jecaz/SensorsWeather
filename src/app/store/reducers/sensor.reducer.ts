@@ -36,7 +36,6 @@ const reducer = createReducer(
         });
       });
     }
-    console.log(sensors, 'sensors')
     return { ...state, Sensors: [...sensors], SensorError: null };
   }),
   on(SensorActions.SuccessUpdateSensorAction, (state: SensorState, { payload }) => {
