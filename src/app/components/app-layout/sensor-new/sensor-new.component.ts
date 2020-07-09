@@ -10,7 +10,6 @@ import SensorState from '../../../store/states/sensor.state';
 import {Store} from '@ngrx/store';
 import * as SensorActions from '../../../store/actions/sensor.action';
 import {Actions, ofType} from '@ngrx/effects';
-import {Pageable} from "../../../models/pageable.model";
 
 @Component({
   selector: 'app-sensor-new',
@@ -60,11 +59,11 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       if (action.type === '[Sensor] - Success Update Sensor') {
         this.sensorsService.setSelectedSensor('');
         this.displayNotification(this.displaySuccessMessage('updated'), 'Close', 'success');
-        this.router.navigate(['../sensors'], { relativeTo: this.activeRoute.parent });
+        this.navigateToPage();
         return;
       }
       this.displayNotification(this.displaySuccessMessage('created'), 'Close', 'success');
-      this.router.navigate(['../sensors'], { relativeTo: this.activeRoute });
+      this.navigateToPage();
     });
   }
 
@@ -74,6 +73,10 @@ export class SensorNewComponent implements OnInit, OnDestroy {
 
   private set sub(sub: Subscription) {
     this.subscriptions.push(sub);
+  }
+
+  navigateToPage() {
+    this.isChecked ? this.router.navigate(['/sensors/grid']) : this.router.navigate(['/sensors/card']);
   }
 
   initForm() {

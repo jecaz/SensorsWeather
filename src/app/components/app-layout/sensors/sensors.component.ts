@@ -29,53 +29,54 @@ export class SensorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isSliderChecked = false;
-    this.typeDropdown = [];
-    this.sub = this.sensors$
-      .pipe(
-        map(x => {
-          this.sensors = x.Sensors;
-          this.setTypeDropdown(this.sensors);
-        })
-      ).subscribe();
-    this.sub = this.sensorService.getIsSliderChecked().subscribe(isChecked => {
-      this.isSliderChecked = isChecked;
-      if (this.isSliderChecked) {
-        this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5, 'name', 'asc') }));
-      } else {
-        this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
-      }
-    });
+    // this.isSliderChecked = false;
+    // this.typeDropdown = [];
+    // this.sub = this.sensors$
+    //   .pipe(
+    //     map(x => {
+    //       this.sensors = x.Sensors;
+    //       this.setTypeDropdown(this.sensors);
+    //     })
+    //   ).subscribe();
+    // this.sub = this.sensorService.getIsSliderChecked().subscribe(isChecked => {
+    //   this.isSliderChecked = isChecked;
+    //   if (this.isSliderChecked) {
+    //     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: new Pageable(0, 5, 'name', 'asc') }));
+    //   } else {
+    //     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: null }));
+    //   }
+    // });
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
-    this.sensors = null;
+    // this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
+    // this.sensors = null;
   }
 
-  private set sub(sub: Subscription) {
-    this.subscriptions.push(sub);
-  }
-
-  groupSensorsByType(sensors: Sensor[], key: string) {
-    return sensors.reduce((sensor, item) => {
-      const group = item[key];
-      sensor[group] = sensor[group] || [];
-      sensor[group].push(item);
-      return sensor;
-    }, {});
-  }
-
-  onSelectItem(event) {
-    if (!event) {
-      return;
-    }
-    this.searchByType = event.value;
-  }
-
-  setTypeDropdown(sensors: Sensor[]) {
-    if (this.typeDropdown.length === 0) {
-      Object.keys(this.groupSensorsByType(sensors, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
-    }
-  }
+  // private set sub(sub: Subscription) {
+  //   this.subscriptions.push(sub);
+  // }
+  //
+  // groupSensorsByType(sensors: Sensor[], key: string) {
+  //   return sensors.reduce((sensor, item) => {
+  //     const group = item[key];
+  //     sensor[group] = sensor[group] || [];
+  //     sensor[group].push(item);
+  //     return sensor;
+  //     return sensor;
+  //   }, {});
+  // }
+  //
+  // onSelectItem(event) {
+  //   if (!event) {
+  //     return;
+  //   }
+  //   this.searchByType = event.value;
+  // }
+  //
+  // setTypeDropdown(sensors: Sensor[]) {
+  //   if (this.typeDropdown.length === 0) {
+  //     Object.keys(this.groupSensorsByType(sensors, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
+  //   }
+  // }
 }

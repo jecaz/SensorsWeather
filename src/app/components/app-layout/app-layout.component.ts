@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {SensorsService} from '../../services/sensors.service';
 import {MatButton, MatDialog, MatSidenav, MatSlideToggle, MatSlideToggleChange} from '@angular/material';
 import {DialogComponent} from '../../common/dialog/dialog.component';
@@ -15,7 +15,7 @@ import * as SensorActions from '../../store/actions/sensor.action';
   templateUrl: './app-layout.component.html',
   styleUrls: ['./app-layout.component.scss']
 })
-export class AppLayoutComponent implements OnInit, OnDestroy {
+export class AppLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editBtn', { static: true }) editButton: MatButton;
   @ViewChild('deleteBtn', { static: true }) deleteButton: MatButton;
@@ -38,11 +38,11 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.isDisabledButtons(true);
     this.sub = this.sensorService.getSelectedSensor().subscribe(sensorId => {
       if (sensorId) {
-        this.setSelectedSensorId(sensorId, false);
+        this.setSelectedSensorIdAndButtons(sensorId, false);
         this.cdref.detectChanges();
         return;
       }
-      this.setSelectedSensorId('', true);
+      this.setSelectedSensorIdAndButtons('', true);
     });
     this.sub = this.actions$.pipe(
       ofType(SensorActions.ErrorSensorAction)
@@ -56,6 +56,13 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (this.router.url.includes('grid')) {
+      this.toggleSlider.checked = true;
+      this.cdref.detectChanges();
+    }
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
   }
@@ -64,7 +71,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  setSelectedSensorId(sensorId: any, isDisabledButtons) {
+  setSelectedSensorIdAndButtons(sensorId: any, isDisabledButtons) {
     this.selectedSensorId = sensorId;
     this.isDisabledButtons(isDisabledButtons);
   }
@@ -82,7 +89,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: this.selectedSensorId }));
-        this.setSelectedSensorId('', true);
+        this.setSelectedSensorIdAndButtons('', true);
       }
     });
   }
@@ -110,8 +117,17 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   }
 
   onToggleSlider(event: MatSlideToggleChange) {
-    event.checked ? this.buttonsVisibility('hidden') : this.buttonsVisibility('visible');
     this.sensorService.setIsSliderChecked(event.checked);
+    if (event.checked) {
+      this.actionOnToggle('hidden', 'grid');
+    } else {
+      this.actionOnToggle('visible', 'card');
+    }
+  }
+
+  actionOnToggle(visibility: string, partOfUrl: string) {
+    this.buttonsVisibility(visibility);
+    this.router.navigate([`/sensors/${partOfUrl}`]);
   }
 
   buttonsVisibility(visible: string) {

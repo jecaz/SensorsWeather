@@ -5,11 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --aot --base-href ./ && json-server --watch mocks/db.json --middlewares ./node_modules/json-server-reset",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
     "mock:server": "json-server --watch mocks/db.json --middlewares ./node_modules/json-server-reset",
-    "start:project": "npm run mock:server && npm start"
+    "start:project": "start npm run mock:server && start npm start"
   },
   "private": true,
   "dependencies": {

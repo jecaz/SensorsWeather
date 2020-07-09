@@ -2,14 +2,14 @@
   <mat-toolbar class="sensors-toolbar"  color="primary">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayoutAlign="center center">
-        <a mat-button (click)="setSelectedSensorId('', true)" routerLink="/sensors">Sensors</a>
-        <mat-slide-toggle matTooltip="Switch view" (change)="onToggleSlider($event)"></mat-slide-toggle>
+        <a mat-button (click)="setSelectedSensorIdAndButtons('', true)" routerLink="/sensors">Sensors</a>
+        <mat-slide-toggle #toggleSlider matTooltip="Switch view" (change)="onToggleSlider($event)"></mat-slide-toggle>
       </div>
       <div fxShow="true" fxHide.lt-md="true">
         <button #createBtn
                 mat-button routerLink="/sensor"
                 routerLinkActive="active-button"
-                (click)="setSelectedSensorId('', true)"
+                (click)="setSelectedSensorIdAndButtons('', true)"
                 [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>add</mat-icon>
           Create
@@ -40,7 +40,7 @@
       <mat-nav-list>
         <a mat-list-item
            routerLink="/sensor"
-           (click)="setSelectedSensorId('', true); sidenav.toggle()">
+           (click)="setSelectedSensorIdAndButtons('', true); sidenav.toggle()">
           <mat-icon>add</mat-icon>
           Create
         </a>
