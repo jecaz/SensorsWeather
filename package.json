@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --aot --base-href --silent ./ && json-server --watch mocks/db.json --middlewares ./node_modules/json-server-reset",
+    "build": "ng build --prod --aot --base-href ./ && json-server --watch mocks/db.json --middlewares ./node_modules/json-server-reset",
     "mock:server": "json-server --watch mocks/db.json --middlewares ./node_modules/json-server-reset",
     "start:project": "start npm run mock:server && start npm start"
   },
