@@ -76,17 +76,6 @@
       "lastUpdate": 1507211004000,
       "type": "ALARM",
       "totalSensorCount": null
-    },
-    {
-      "id": 8,
-      "name": "aa",
-      "image": "images/ico_pressure.svg",
-      "path": "aee",
-      "unitSymbol": "aee",
-      "value": "a",
-      "lastUpdate": 1594304933095,
-      "type": "FEED",
-      "totalSensorCount": null
     }
   ]
 }
