@@ -58,7 +58,6 @@ export class SensorGridComponent implements OnInit, OnDestroy {
       .pipe(
         map(x => {
           this.sensors = x.Sensors;
-
           this.dataSource.data = x.Sensors;
           this.setTotalRecords();
         })
@@ -104,8 +103,18 @@ export class SensorGridComponent implements OnInit, OnDestroy {
     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
-  filterData(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  filterData() {
+    this.setPageableOnFilter('', '');
+  }
+
+  resetFilter() {
+    this.filterValue = '';
+    this.setPageableOnFilter(0, 5);
+  }
+
+  setPageableOnFilter(pageIndex: any, pageSize: any, filterValue?: string) {
+    const pagination = new Pageable(pageIndex, pageSize, this.sort.active, this.sort.direction, this.filterValue);
+    this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
   openDialog(sensorId): void {

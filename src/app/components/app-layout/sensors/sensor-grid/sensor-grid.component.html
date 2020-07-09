@@ -2,11 +2,11 @@
 <div class="sensor-table mat-elevation-z8">
   <div class="sensor-table-filter" fxLayout="row" fxLayoutAlign="flex-start center">
     <mat-form-field class="sensor-table-filter-form">
-      <input [(ngModel)]="filterValue" matInput (keyup)="filterData(filterValue)" placeholder="Filter data">
+      <input [(ngModel)]="filterValue" matInput (keyup)="filterData()" placeholder="Filter by name">
       <mat-icon *ngIf="filterValue"
                 matSuffix
                 class="sensor-table-filter-form--icon"
-                (click)="dataSource.filter = ''; filterValue = '';">clear</mat-icon>
+                (click)="resetFilter()">clear</mat-icon>
     </mat-form-field>
     <div fxLayoutAlign="center center">
       <button mat-button color="primary" (click)="goToPage()">

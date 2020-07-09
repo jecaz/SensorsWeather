@@ -43,7 +43,8 @@ export class SensorsService {
       params = new HttpParams().set('_page', pagination.pageIndex)
                                 .set('_limit', pagination.pageSize)
                                 .set('_sort', pagination.sort)
-                                .set('_order', pagination.order);
+                                .set('_order', pagination.order)
+                                .set('name_like', pagination.search ? pagination.search : '');
     }
     return this.http.get<Sensor[]>(this.API_URL + '/sensors', { params, observe: 'response' })
       .pipe(
