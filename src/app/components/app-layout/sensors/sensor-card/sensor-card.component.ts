@@ -38,8 +38,9 @@ export class SensorCardComponent implements OnInit, OnDestroy {
           this.setTypeDropdown(this.sensors);
         })
       ).subscribe();
-
   }
+
+
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
