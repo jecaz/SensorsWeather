@@ -88,6 +88,10 @@
   justify-content: space-around !important;
 }
 
+.mat-drawer-container {
+  background-color: transparent;
+}
+
 .error {
   @include message-display(10px, $error-message-col, $error-message-bgCol, $error-message-borderCol, 400px);
 }
@@ -97,7 +101,7 @@
 }
 
 .warn {
-  @include message-display(10px, $warn-col, $warn-bgCol, $warn-borderCol, 200px);
+  @include message-display(10px, $warn-col, $warn-bgCol, $warn-borderCol, 300px);
 }
 
 .filter--search {

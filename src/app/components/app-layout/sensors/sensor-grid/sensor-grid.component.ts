@@ -7,12 +7,12 @@ import * as SensorActions from '../../../../store/actions/sensor.action';
 import * as fromSensors from '../../../../store/selectors/sensors.selectors';
 import SensorState from '../../../../store/states/sensor.state';
 import {select, Store} from '@ngrx/store';
-import {DialogComponent} from '../../../../common/dialog/dialog.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
 import {Actions, ofType} from '@ngrx/effects';
 import {SensorsService} from '../../../../services/sensors.service';
 import {map} from 'rxjs/internal/operators';
+import {NotificationService} from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-sensor-grid',
@@ -35,14 +35,14 @@ export class SensorGridComponent implements OnInit, OnDestroy {
   sortState: Sort;
   pageIndex: number;
   subscriptions: Subscription[] = [];
-  idsForDelete: any[];
 
   constructor(private store: Store<{sensors: SensorState}>,
               public dialog: MatDialog,
               private activeRoute: ActivatedRoute,
               private router: Router,
               private actions$: Actions,
-              private sensorService: SensorsService) {
+              private sensorService: SensorsService,
+              private notificationService: NotificationService) {
     this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
   }
 
@@ -68,11 +68,10 @@ export class SensorGridComponent implements OnInit, OnDestroy {
       if (this.sensors && this.sensors.length === 0 && this.paginator.pageIndex === 0) {
         this.totalRecords = 0;
         this.paginator.length = this.totalRecords;
-      } else if (this.idsForDelete) {
-        this.totalRecords = this.totalRecords - this.idsForDelete.length;
+      } else if (this.selection.selected) {
+        this.totalRecords = this.totalRecords - this.selection.selected.length;
         this.paginator.length = this.totalRecords;
       }
-      this.idsForDelete = null;
       this.selection.clear();
     });
   }
@@ -112,16 +111,15 @@ export class SensorGridComponent implements OnInit, OnDestroy {
     this.setPageableOnFilter(0, 5);
   }
 
-  setPageableOnFilter(pageIndex: any, pageSize: any, filterValue?: string) {
+  setPageableOnFilter(pageIndex: any, pageSize: any) {
     const pagination = new Pageable(pageIndex, pageSize, this.sort.active, this.sort.direction, this.filterValue);
     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
   openDialog(sensorId): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '350px',
-      data: {title: 'Delete sensor', content: 'Are you sure you want to delete sensor?', accept: 'Ok', reject: 'No'}
-    });
+    const dialogRef = this.notificationService
+                          .openConfirmationDialog('Delete sensor', 'Are you sure you want to delete sensor?',
+                                                  'Ok', 'No', '350px');
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: sensorId }));
@@ -156,7 +154,10 @@ export class SensorGridComponent implements OnInit, OnDestroy {
   }
 
   deleteAllSelected() {
-    this.idsForDelete = this.selection.selected.map(item => item.id);
+    if (this.selection.selected.length === 0) {
+      this.notificationService.openSnackBar('Select one or more sensors!', 'Close', 'warn');
+      return;
+    }
     this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: this.selection.selected}));
   }
 

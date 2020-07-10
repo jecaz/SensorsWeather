@@ -11,6 +11,9 @@ html, body {
 
 body {
   margin: 0;
-  background-color: #eff4f7;
+  //background-color: #eff4f7;
   font-size: 1.6rem;
+  background: rgba(2,0,36,.1);
+  background: linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(68,112,241,.1) 35%, rgba(0,212,255,0) 100%);
+
 }

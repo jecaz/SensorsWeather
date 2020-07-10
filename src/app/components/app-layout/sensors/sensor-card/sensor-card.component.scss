@@ -14,8 +14,13 @@
 }
 
 .sensors-card {
+  transition: all .2s ease-in-out;
+
   &:hover {
     cursor: pointer;
+    transform: scale(1.03);
+    position: relative;
+    z-index: 2;
   }
 
   &-subtitle--main {
@@ -48,5 +53,7 @@
 }
 
 .selected {
-  background: #E0FFFF;
+  transform: scale(1.03);
+  background: linear-gradient(90deg, rgba(2,0,36,.1) 0%, rgba(68,112,241,0) 2%, rgba(0,212,255,0) 100%);
+  border: 1px solid rgba(2,0,36,.5);
 }

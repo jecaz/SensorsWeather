@@ -1,7 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {SensorsService} from '../../services/sensors.service';
 import {MatButton, MatDialog, MatSidenav, MatSlideToggle, MatSlideToggleChange} from '@angular/material';
-import {DialogComponent} from '../../common/dialog/dialog.component';
 import {Subscription} from 'rxjs/index';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../../services/notification.service';
@@ -82,10 +81,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '350px',
-      data: {title: 'Delete sensor', content: 'Are you sure you want to delete sensor?', accept: 'Ok', reject: 'No'}
-    });
+    const dialogRef = this.notificationService
+                          .openConfirmationDialog('Delete sensor', 'Are you sure you want to delete sensor?',
+                                                  'Ok', 'No', '350px');
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: this.selectedSensorId }));
