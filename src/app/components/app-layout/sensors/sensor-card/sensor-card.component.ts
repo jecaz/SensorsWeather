@@ -75,4 +75,8 @@ export class SensorCardComponent extends SubscribedContainerComponent implements
       Object.keys(this.groupSensorsByType(sensors, 'type')).forEach(key => this.typeDropdown.push(key.toString()));
     }
   }
+
+  getImageUrl(sensorImage: string) {
+    return `./../../../assets/${sensorImage}`;
+  }
 }

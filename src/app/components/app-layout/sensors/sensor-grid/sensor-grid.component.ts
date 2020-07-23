@@ -157,4 +157,8 @@ export class SensorGridComponent extends SubscribedContainerComponent implements
     const pagination = new Pageable(this.pageIndex, this.paginator.pageSize, event.active, event.direction);
     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
+
+  getImageUrl(sensorImage: string) {
+    return `./../../../assets/${sensorImage}`;
+  }
 }
