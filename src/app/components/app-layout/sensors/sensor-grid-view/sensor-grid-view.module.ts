@@ -13,11 +13,11 @@ import {
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {SensorGridComponent} from './sensor-grid.component';
+import {SensorGridViewComponent} from './sensor-grid-view.component';
 
 @NgModule({
   declarations: [
-    SensorGridComponent
+    SensorGridViewComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +34,7 @@ import {SensorGridComponent} from './sensor-grid.component';
     MatSortModule,
     MatCheckboxModule
   ],
-  exports: [SensorGridComponent]
+  exports: [SensorGridViewComponent]
 })
-export class SensorGridModule {
+export class SensorGridViewModule {
 }

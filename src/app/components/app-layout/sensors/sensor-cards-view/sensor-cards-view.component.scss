@@ -1,0 +1,12 @@
+.filter {
+  &--icon {
+    position: absolute;
+    right: 2%;
+    top: 30%;
+    zoom: .6;
+  }
+
+  &--close-icon {
+    cursor: pointer;
+  }
+}

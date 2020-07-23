@@ -1,18 +1,5 @@
 @import "../../../../../styles/variables";
 
-.filter {
-  &--icon {
-    position: absolute;
-    right: 2%;
-    top: 30%;
-    zoom: .6;
-  }
-
-  &--close-icon {
-    cursor: pointer;
-  }
-}
-
 .sensors-card {
   transition: all .2s ease-in-out;
 

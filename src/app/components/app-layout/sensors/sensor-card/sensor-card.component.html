@@ -1,56 +1,21 @@
-<h1>Card View</h1>
-<div fxLayout="row wrap" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign.sm="center stretch" fxLayoutAlign="space-around stretch">
-  <mat-form-field class="filter" fxFlex="30%" fxFlex.sm="100%">
-    <mat-label>Filter by name, path, value or type</mat-label>
-    <input type="text"
-           matInput
-           placeholder="Search"
-           [(ngModel)]="searchValue">
-    <mat-icon *ngIf="searchValue" class="filter--icon filter--close-icon" (click)="searchValue = ''">close</mat-icon>
-    <mat-icon *ngIf="!searchValue" class="filter--icon">search</mat-icon>
-  </mat-form-field>
-  <mat-form-field class="filter" fxFlex="30%" fxFlex.sm="100%">
-    <mat-label>Filter by type</mat-label>
-    <mat-select [(ngModel)]="searchByType"
-                (selectionChange)="onSelectDropdownItem($event)"
-                (openedChange)="filterValue.focus()">
-      <input class="filter--search"
-             #filterValue
-             matInput
-             type="text"
-             placeholder="Filter by type">
-      <mat-option>None</mat-option>
-      <mat-option *ngFor="let type of typeDropdown" [value]="type"><span>{{type}}</span></mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div fxLayout="row wrap" fxLayoutGap="16px grid" fxLayoutAlign="center stretch">
-  <div fxFlex="40rem"
-       fxFlex.xs="35rem"
-       fxFlex.xs="100%"
-       fxFlex.sm="50%"
-       fxFlex.lt-md="0 1 calc(50% - 32px)"
-       *ngFor="let sensor of sensors | filter: (searchValue || searchByType) : ['name', 'path', 'value', 'type']">
-    <mat-card *ngIf="sensor" class="mat-elevation-z4 sensors-card"
-              title="Select sensor"
-              [class.selected]="sensor.id === selectedSensorId"
-              (click)="selectSensor(sensor.id)">
-      <mat-card-header>
-        <mat-card-title>{{sensor.name}}</mat-card-title>
-        <mat-card-subtitle>
-          <span class="sensors-card-subtitle--main">{{sensor.path}}</span>
-          <span>@{{sensor.lastUpdate | date: 'hh:mm'}}</span>
-        </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content class="sensors-card-content">
-        <div class="sensors-card-content-main" fxLayout="row" fxLayoutAlign="space-between center">
-          <img class="sensors-card-content-main--icon" [src]="getImageUrl(sensor.image)" alt="Sensor icon">
-          <span class="sensors-card-content-main--value" matTooltip="{{sensor.value.length >= 20 ? sensor.value : ''}}">
-                {{sensor.value | shorten: 20}}
-              </span>
-        </div>
-        <div class="sensors-card-content--symbol">{{sensor.unitSymbol}}</div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
+<mat-card *ngIf="sensor" class="mat-elevation-z4 sensors-card"
+          title="Select sensor"
+          [class.selected]="isSelected"
+          (click)="selectSensor(sensor.id)">
+  <mat-card-header>
+    <mat-card-title>{{sensor.name}}</mat-card-title>
+    <mat-card-subtitle>
+      <span class="sensors-card-subtitle--main">{{sensor.path}}</span>
+      <span>@{{sensor.lastUpdate | date: 'hh:mm'}}</span>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="sensors-card-content">
+    <div class="sensors-card-content-main" fxLayout="row" fxLayoutAlign="space-between center">
+      <img class="sensors-card-content-main--icon" [src]="getImageUrl(sensor.image)" alt="Sensor icon">
+      <span class="sensors-card-content-main--value" matTooltip="{{sensor.value.length >= 20 ? sensor.value : ''}}">
+        {{sensor.value | shorten: 20}}
+      </span>
+    </div>
+    <div class="sensors-card-content--symbol">{{sensor.unitSymbol}}</div>
+  </mat-card-content>
+</mat-card>

@@ -17,10 +17,10 @@ import {SubscribedContainerComponent} from '../../../../common/subscribed-contai
 
 @Component({
   selector: 'app-sensor-grid',
-  templateUrl: './sensor-grid.component.html',
-  styleUrls: ['./sensor-grid.component.scss']
+  templateUrl: './sensor-grid-view.component.html',
+  styleUrls: ['./sensor-grid-view.component.scss']
 })
-export class SensorGridComponent extends SubscribedContainerComponent implements OnInit {
+export class SensorGridViewComponent extends SubscribedContainerComponent implements OnInit {
 
   sensors: Sensor[];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
