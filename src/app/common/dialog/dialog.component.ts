@@ -4,8 +4,7 @@ import {DialogData} from '../../models/dialog-data.interface';
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  templateUrl: './dialog.component.html'
 })
 export class DialogComponent {
 

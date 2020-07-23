@@ -2,28 +2,34 @@
 <div class="sensor-table mat-elevation-z8">
   <div class="sensor-table-filter" fxLayout="row" fxLayoutAlign="flex-start center">
     <mat-form-field class="sensor-table-filter-form">
-      <input [(ngModel)]="filterValue" matInput (keyup)="filterData()" placeholder="Filter by name">
+      <input [(ngModel)]="filterValue" matInput (keyup)="filterByName()" placeholder="Filter by name">
       <mat-icon *ngIf="filterValue"
                 matSuffix
                 class="sensor-table-filter-form--icon"
-                (click)="resetFilter()">clear</mat-icon>
+                (click)="resetFilterByName()">clear</mat-icon>
     </mat-form-field>
     <div fxLayoutAlign="center center">
       <button mat-button color="primary" (click)="goToPage()">
         <mat-icon>add</mat-icon>Create
       </button>
-      <button mat-button color="primary" (click)="deleteAllSelected()">
+      <button mat-button color="primary" (click)="deleteAllSelectedSensors()">
         <mat-icon>delete</mat-icon>Delete selected
       </button>
     </div>
   </div>
   <div gdAreas="table" gdColumns="100%!">
-    <table class="sensor-table-content" mat-table matSort (matSortChange)="sortData($event)" matSortDisableClear [dataSource]="dataSource" gdArea="table">
+    <table class="sensor-table-content"
+           mat-table
+           matSort
+           (matSortChange)="sortData($event)"
+           matSortDisableClear
+           [dataSource]="dataSource"
+           gdArea="table">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [checked]="selection.hasValue() && isAllTableRowsSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllTableRowsSelected()"
                         [aria-label]="checkboxLabel()">
           </mat-checkbox>
         </th>
@@ -71,7 +77,7 @@
           <button mat-button color="primary" (click)="goToPage(element.id)">
             <mat-icon>create</mat-icon>Edit
           </button>
-          <button mat-button color="primary" (click)="openDialog(element.id)">
+          <button mat-button color="primary" (click)="openDeleteDialog(element.id)">
             <mat-icon>delete</mat-icon>Delete
           </button>
         </td>
@@ -81,7 +87,7 @@
     </table>
   </div>
   <mat-paginator showFirstLastButtons
-                 [length]="totalRecords"
+                 [length]="tableTotalRecords"
                  [pageSize]="5"
                  [pageSizeOptions]="[5, 10, 20]"
                  (page)="onPage($event)">

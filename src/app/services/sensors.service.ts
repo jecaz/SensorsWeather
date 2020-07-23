@@ -12,7 +12,7 @@ import {switchMap, take} from 'rxjs/internal/operators';
 })
 export class SensorsService {
 
-  API_URL: string = environment.urlSensors;
+  API_URL: string = environment.apiUrl;
   selectedSensorId: BehaviorSubject<any>;
   isSliderChecked: BehaviorSubject<boolean>;
 
@@ -41,14 +41,17 @@ export class SensorsService {
     let params = {};
     if (pagination) {
       params = new HttpParams().set('_page', pagination.pageIndex)
-                                .set('_limit', pagination.pageSize)
-                                .set('_sort', pagination.sort)
-                                .set('_order', pagination.order)
-                                .set('name_like', pagination.search ? pagination.search : '');
+        .set('_limit', pagination.pageSize)
+        .set('_sort', pagination.sort)
+        .set('_order', pagination.order)
+        .set('name_like', pagination.search ? pagination.search : '');
     }
     return this.http.get<Sensor[]>(this.API_URL + '/sensors', { params, observe: 'response' })
       .pipe(
-        map(response => response.body.map(item => new Sensor(item, response)))
+        map(response => response.body.map(item => {
+          const totalSensorCount  = +response.headers.get('X-Total-Count');
+          return new Sensor({...item, totalSensorCount});
+        }))
       );
   }
 
@@ -79,10 +82,10 @@ export class SensorsService {
       switchMap(sensorsAll => {
         // find all that remain after delete
         s = sensorsAll.filter(sensor1 => {
-              return !sensors.some(sensor2 => {
-                return sensor1.id === sensor2.id;
-              });
-            });
+          return !sensors.some(sensor2 => {
+            return sensor1.id === sensor2.id;
+          });
+        });
         return this.http.post(this.API_URL + '/reset', {sensors: s}, { responseType: 'text' as 'json' });
       })
     );

@@ -1,28 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MediaChange, MediaObserver} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/index';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 
-  mediaSub: Subscription;
+  constructor() {}
 
-  constructor(private mediaObserver: MediaObserver) {}
-
-  ngOnInit(): void {
-    this.mediaSub = this.mediaObserver.media$.subscribe((change: MediaChange) => {
-      // console.log(change.mqAlias);
-      // console.log(change.mediaQuery);
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.mediaSub) {
-      this.mediaSub.unsubscribe();
-    }
-  }
 }

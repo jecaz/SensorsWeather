@@ -1,28 +1,27 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Sensor} from '../../../models/sensor.model';
 import {SensorsService} from '../../../services/sensors.service';
 import {NotificationService} from '../../../services/notification.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs/index';
 import * as moment from 'moment';
 import SensorState from '../../../store/states/sensor.state';
 import {Store} from '@ngrx/store';
 import * as SensorActions from '../../../store/actions/sensor.action';
 import {Actions, ofType} from '@ngrx/effects';
+import {SubscribedContainerComponent} from '../../../common/subscribed-container/subscribed-container.component';
 
 @Component({
   selector: 'app-sensor-new',
   templateUrl: './sensor-new.component.html',
   styleUrls: ['./sensor-new.component.scss']
 })
-export class SensorNewComponent implements OnInit, OnDestroy {
+export class SensorNewComponent extends SubscribedContainerComponent implements OnInit {
 
   form: FormGroup;
   typeDropdown: string[];
   imagesDropdown: any[];
-  subscriptions: Subscription[] = [];
-  id: any;
+  sensorId: any;
   isChecked: boolean;
 
   constructor(private sensorsService: SensorsService,
@@ -31,6 +30,7 @@ export class SensorNewComponent implements OnInit, OnDestroy {
               private router: Router,
               private store: Store<{sensors: SensorState}>,
               private actions$: Actions) {
+    super();
   }
 
   ngOnInit() {
@@ -38,9 +38,9 @@ export class SensorNewComponent implements OnInit, OnDestroy {
     this.sub = this.activeRoute.params.subscribe(p => {
       this.initForm();
       if (p.id) {
-        this.id = p.id;
-        this.sensorsService.setSelectedSensor(this.id);
-        this.getSensorById(this.id);
+        this.sensorId = p.id;
+        this.sensorsService.setSelectedSensor(this.sensorId);
+        this.getSensorById(this.sensorId);
       }
     });
     this.typeDropdown = ['FEED', 'ACTUATOR', 'ALARM'];
@@ -65,14 +65,6 @@ export class SensorNewComponent implements OnInit, OnDestroy {
       this.displayNotification(this.displaySuccessMessage('created'), 'Close', 'success');
       this.navigateToPage();
     });
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
-  }
-
-  private set sub(sub: Subscription) {
-    this.subscriptions.push(sub);
   }
 
   navigateToPage() {
@@ -115,8 +107,8 @@ export class SensorNewComponent implements OnInit, OnDestroy {
     }
     const sensor: Sensor = new Sensor(this.form.getRawValue());
     sensor.lastUpdate = this.getDateFromString(sensor.lastUpdate);
-    if (this.id) {
-      sensor.id = this.id;
+    if (this.sensorId) {
+      sensor.id = this.sensorId;
       this.store.dispatch(SensorActions.BeginUpdateSensorAction({ payload: sensor }));
     } else {
       this.store.dispatch(SensorActions.BeginCreateSensorAction({ payload: sensor }));

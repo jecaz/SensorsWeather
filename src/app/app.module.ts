@@ -28,7 +28,6 @@ import {SensorEffects} from './store/effects/sensor.effects';
     StoreModule.forRoot({ sensors: SensorReducer })
   ],
   entryComponents: [DialogComponent],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

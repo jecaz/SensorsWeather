@@ -1,8 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/index';
-import SensorState from '../../../store/states/sensor.state';
-import { select, Store } from '@ngrx/store';
-import * as fromSensors from '../../../store/selectors/sensors.selectors';
 
 @Component({
   selector: 'app-sensors',
@@ -11,12 +7,9 @@ import * as fromSensors from '../../../store/selectors/sensors.selectors';
 })
 export class SensorsComponent implements OnInit {
 
-  sensors$: Observable<SensorState>;
   treeDataRaw: any[];
 
-  constructor(private store: Store<{sensors: SensorState}>) {
-    this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
-  }
+  constructor() { }
 
   ngOnInit(): void {
     this.treeDataRaw = [

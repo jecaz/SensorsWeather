@@ -10,7 +10,7 @@ export class Sensor {
   type: string;
   totalSensorCount: number;
 
-  constructor(obj?: any, response?: any) {
+  constructor(obj?: any) {
     this.id = obj && obj.id;
     this.name = obj && obj.name;
     this.image = obj && obj.image;
@@ -19,11 +19,6 @@ export class Sensor {
     this.value = obj && obj.value;
     this.lastUpdate = obj && obj.lastUpdate;
     this.type = obj && obj.type;
-    this.totalSensorCount = response ? response.headers.get('X-Total-Count') : null;
-  }
-
-  deserialize(obj: any) {
-    Object.assign(this, obj);
-    return this;
+    this.totalSensorCount = obj && obj.totalSensorCount ? obj.totalSensorCount : null;
   }
 }

@@ -2,7 +2,7 @@
   <mat-toolbar class="sensors-toolbar"  color="primary">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayoutAlign="center center">
-        <a mat-button (click)="setSelectedSensorIdAndButtons('', true)" routerLink="/sensors">Sensors</a>
+        <a mat-button (click)="setSelectedSensorIdAndButtons('', true); goToSensorsViewPage()">Sensors</a>
         <mat-slide-toggle #toggleSlider matTooltip="Switch view" (change)="onToggleSlider($event)"></mat-slide-toggle>
       </div>
       <div fxShow="true" fxHide.lt-md="true">
@@ -24,7 +24,7 @@
         </button>
         <button #deleteBtn
                 title="{{!selectedSensorId ? 'First select sensor' : ''}}"
-                (click)="openDialog()"
+                (click)="openDeleteDialog()"
                 mat-button>
           <mat-icon>delete</mat-icon>
           Delete

@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Sensor} from '../../../../models/sensor.model';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, Sort} from '@angular/material';
 import {Pageable} from '../../../../models/pageable.model';
-import {Observable, Subscription} from 'rxjs/index';
+import {Observable} from 'rxjs/index';
 import * as SensorActions from '../../../../store/actions/sensor.action';
 import * as fromSensors from '../../../../store/selectors/sensors.selectors';
 import SensorState from '../../../../store/states/sensor.state';
@@ -13,20 +13,21 @@ import {Actions, ofType} from '@ngrx/effects';
 import {SensorsService} from '../../../../services/sensors.service';
 import {map} from 'rxjs/internal/operators';
 import {NotificationService} from '../../../../services/notification.service';
+import {SubscribedContainerComponent} from '../../../../common/subscribed-container/subscribed-container.component';
 
 @Component({
   selector: 'app-sensor-grid',
   templateUrl: './sensor-grid.component.html',
   styleUrls: ['./sensor-grid.component.scss']
 })
-export class SensorGridComponent implements OnInit, OnDestroy {
+export class SensorGridComponent extends SubscribedContainerComponent implements OnInit {
 
   sensors: Sensor[];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   tableColumns: string[];
   dataSource: MatTableDataSource<Sensor>;
-  totalRecords: number;
+  tableTotalRecords: number;
   defaultPageIndex: number;
   defaultPageSize: number;
   filterValue: string;
@@ -34,7 +35,6 @@ export class SensorGridComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<Sensor>(true, []);
   sortState: Sort;
   pageIndex: number;
-  subscriptions: Subscription[] = [];
 
   constructor(private store: Store<{sensors: SensorState}>,
               public dialog: MatDialog,
@@ -43,6 +43,7 @@ export class SensorGridComponent implements OnInit, OnDestroy {
               private actions$: Actions,
               private sensorService: SensorsService,
               private notificationService: NotificationService) {
+    super();
     this.sensors$ = store.pipe(select(fromSensors.selectSensorsCollection));
   }
 
@@ -59,34 +60,25 @@ export class SensorGridComponent implements OnInit, OnDestroy {
         map(x => {
           this.sensors = x.Sensors;
           this.dataSource.data = x.Sensors;
-          this.setTotalRecords();
+          this.setTableTotalRecords();
         })
       ).subscribe();
     this.sub = this.actions$.pipe(
       ofType(SensorActions.SuccessDeleteSensorAction)
     ).subscribe((deletedSensor: any) => {
       if (this.sensors && this.sensors.length === 0 && this.paginator.pageIndex === 0) {
-        this.totalRecords = 0;
-        this.paginator.length = this.totalRecords;
+        this.tableTotalRecords = 0;
       } else if (this.selection.selected) {
-        this.totalRecords = this.totalRecords - this.selection.selected.length;
-        this.paginator.length = this.totalRecords;
+        this.tableTotalRecords = this.tableTotalRecords - this.selection.selected.length;
       }
+      this.paginator.length = this.tableTotalRecords;
       this.selection.clear();
     });
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub ? sub.unsubscribe() : null);
-  }
-
-  private set sub(sub: Subscription) {
-    this.subscriptions.push(sub);
-  }
-
-  setTotalRecords(totalRecords?: number) {
+  setTableTotalRecords(totalRecords?: number) {
     if (this.sensors && this.sensors.length > 0) {
-      this.totalRecords = totalRecords ? totalRecords : this.sensors[0].totalSensorCount;
+      this.tableTotalRecords = totalRecords ? totalRecords : this.sensors[0].totalSensorCount;
     }
   }
 
@@ -102,11 +94,11 @@ export class SensorGridComponent implements OnInit, OnDestroy {
     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
-  filterData() {
+  filterByName() {
     this.setPageableOnFilter('', '');
   }
 
-  resetFilter() {
+  resetFilterByName() {
     this.filterValue = '';
     this.setPageableOnFilter(0, 5);
   }
@@ -116,10 +108,8 @@ export class SensorGridComponent implements OnInit, OnDestroy {
     this.store.dispatch(SensorActions.BeginGetSensorsAction({ payload: pagination }));
   }
 
-  openDialog(sensorId): void {
-    const dialogRef = this.notificationService
-                          .openConfirmationDialog('Delete sensor', 'Are you sure you want to delete sensor?',
-                                                  'Ok', 'No', '350px');
+  openDeleteDialog(sensorId): void {
+    const dialogRef = this.notificationService.openDeleteDialog();
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.store.dispatch(SensorActions.BeginDeleteSensorAction({ payload: sensorId }));
@@ -136,24 +126,25 @@ export class SensorGridComponent implements OnInit, OnDestroy {
     this.sensorService.setIsSliderChecked(true);
   }
 
-  isAllSelected() {
+  isAllTableRowsSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllTableRowsSelected() ? this.selection.clear() :
+                                    this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   checkboxLabel(row?: Sensor): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      return `${this.isAllTableRowsSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  deleteAllSelected() {
+  deleteAllSelectedSensors() {
     if (this.selection.selected.length === 0) {
       this.notificationService.openSnackBar('Select one or more sensors!', 'Close', 'warn');
       return;
